@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>La chaîne de production</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root{
+  --papier:#F5F3EE;
+  --papier-2:#EBE8E1;
+  --encre:#131A26;
+  --encre-2:#39414F;
+  --encre-3:#6B7382;
+  --trait:#CFCBC2;
+  --petrole:#101F6E;
+  --orange:#C2762A;
+  --orange-vif:#E9A45C;
+  --rouge:#A32E22;
+  --vert:#2E6B4F;
+  --surface:#FFFFFF;
+  --surface-2:#FAF9F6;
+  --ombre:0 1px 2px rgba(19,26,38,.06), 0 8px 24px -12px rgba(19,26,38,.14);
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --grot:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --papier:#0D121C; --papier-2:#141C2A; --encre:#E8EAEF; --encre-2:#A9B2C1;
+    --encre-3:#727C8D; --trait:#28303F; --petrole:#7C8FE8; --orange:#E9A45C;
+    --orange-vif:#F2BD82; --rouge:#E4705F; --vert:#5FBF92;
+    --surface:#141C2A; --surface-2:#18212F;
+    --ombre:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --papier:#0D121C; --papier-2:#141C2A; --encre:#E8EAEF; --encre-2:#A9B2C1;
+  --encre-3:#727C8D; --trait:#28303F; --petrole:#7C8FE8; --orange:#E9A45C;
+  --orange-vif:#F2BD82; --rouge:#E4705F; --vert:#5FBF92;
+  --surface:#141C2A; --surface-2:#18212F;
+  --ombre:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--papier); color:var(--encre);
+  font-family:var(--serif); font-size:16px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.enveloppe{max-width:1120px;margin:0 0 0 300px;padding:0 32px 96px}
+@media(max-width:1080px){.enveloppe{margin-left:0}}
+
+/* ---------- sommaire du site ---------- */
+.rail-site{
+  position:fixed; left:0; top:0; bottom:0; width:280px; overflow-y:auto;
+  border-right:1px solid var(--trait); padding:30px 22px 60px; background:var(--papier);
+  font-family:var(--grot);
+}
+@media(max-width:1080px){
+  .rail-site{position:static;width:auto;height:auto;border-right:0;
+    border-top:1px solid var(--trait);margin-top:48px;padding:30px 24px 60px}
+}
+.rail-site .marque{display:block;text-decoration:none;margin-bottom:28px}
+.marque-nom{display:block;font-weight:700;font-size:16px;letter-spacing:-.01em;color:var(--encre)}
+.marque-sous{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--encre-3);margin-top:3px}
+.rail-site .groupe{margin-bottom:22px}
+.rail-site .groupe-nom{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--encre-3);margin-bottom:8px}
+.rail-site ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
+.rail-site a{display:block;text-decoration:none;color:var(--encre-2);font-size:14px;
+  font-weight:500;padding:5px 10px;border-radius:2px;border-left:2px solid transparent;line-height:1.35}
+.rail-site a:hover{background:var(--papier-2);color:var(--encre)}
+.rail-site a.actif{color:var(--encre);font-weight:600;border-left-color:var(--orange);background:var(--papier-2)}
+
+/* ---------- en-tête ---------- */
+header{padding:52px 0 28px;border-bottom:1px solid var(--trait)}
+.kicker{
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--encre-3); margin:0 0 14px;
+}
+h1{
+  font-family:var(--grot); font-weight:700; font-size:clamp(30px,4.4vw,50px);
+  line-height:1.04; letter-spacing:-.02em; margin:0 0 16px; text-wrap:balance;
+}
+.chapo{max-width:62ch;color:var(--encre-2);margin:0;font-size:17px}
+.chapo strong{color:var(--encre);font-weight:600}
+
+/* ---------- filtres ---------- */
+.filtres{
+  position:sticky; top:0; z-index:10; background:var(--papier);
+  border-bottom:1px solid var(--trait); padding:14px 0 13px; margin-bottom:34px;
+}
+.filtres-inner{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filtres-titre{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--encre-3);margin-right:6px;
+}
+.puce{
+  font-family:var(--grot); font-weight:600; font-size:12.5px; letter-spacing:.005em;
+  padding:6px 13px; border-radius:2px; border:1px solid var(--trait);
+  background:transparent; color:var(--encre-2); cursor:pointer;
+  transition:background .13s, color .13s, border-color .13s;
+}
+.puce:hover{border-color:var(--encre-3);color:var(--encre)}
+.puce[aria-pressed="true"]{background:var(--petrole);border-color:var(--petrole);color:#fff}
+:root[data-theme="dark"] .puce[aria-pressed="true"],
+@media (prefers-color-scheme:dark){}
+.puce:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+/* ---------- la ligne ---------- */
+.ligne{position:relative;padding-left:64px}
+.ligne::before{
+  content:""; position:absolute; left:19px; top:10px; bottom:70px; width:2px;
+  background:linear-gradient(var(--trait) 0 70%, transparent 70%);
+  background-size:2px 9px;
+}
+.etape{position:relative;margin-bottom:12px}
+.etape.estompe{opacity:.24}
+.numero{
+  position:absolute; left:-64px; top:12px; width:40px; height:40px; border-radius:50%;
+  display:grid; place-items:center; background:var(--surface);
+  border:2px solid var(--trait); font-family:var(--mono); font-size:13px; font-weight:600;
+  color:var(--encre-2); z-index:2;
+}
+.etape[data-genre="porte"] .numero{
+  border-color:var(--orange); color:var(--orange); background:var(--papier);
+  border-radius:3px; transform:rotate(45deg); font-size:0;
+}
+.etape[data-genre="porte"] .numero::after{
+  content:""; width:11px; height:11px; border-radius:50%; background:var(--orange);
+  transform:rotate(-45deg);
+}
+.tete{
+  width:100%; text-align:left; background:var(--surface); border:1px solid var(--trait);
+  border-radius:3px; padding:15px 18px; cursor:pointer; display:flex; gap:16px;
+  align-items:baseline; font:inherit; color:inherit; box-shadow:var(--ombre);
+  transition:border-color .14s;
+}
+.tete:hover{border-color:var(--encre-3)}
+.tete:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.etape[data-genre="porte"] .tete{
+  background:var(--papier-2); border-left:3px solid var(--orange);
+}
+.titre-etape{
+  font-family:var(--grot); font-weight:600; font-size:17px; letter-spacing:-.005em;
+  margin:0; flex:1; line-height:1.3;
+}
+.sous{
+  font-family:var(--mono); font-size:11px; color:var(--encre-3);
+  letter-spacing:.03em; white-space:nowrap;
+}
+.etape[data-genre="porte"] .sous{color:var(--orange)}
+.corps{padding:4px 18px 22px 18px;border-left:1px solid var(--trait);margin-left:18px}
+.corps p{margin:14px 0;max-width:64ch;color:var(--encre-2)}
+.corps p strong{color:var(--encre);font-weight:600}
+.corps > :first-child{margin-top:16px}
+
+code, .cmd{font-family:var(--mono);font-size:12.5px}
+code{background:var(--papier-2);padding:1px 5px;border-radius:2px;color:var(--encre)}
+.cmd{
+  display:block; background:var(--encre); color:#DCE3EE; padding:11px 14px;
+  border-radius:3px; overflow-x:auto; white-space:pre; margin:14px 0; font-size:12px;
+  line-height:1.7;
+}
+:root[data-theme="dark"] .cmd{background:#080C13;border:1px solid var(--trait)}
+
+.note{
+  border-left:2px solid var(--rouge); padding:2px 0 2px 15px; margin:16px 0;
+  max-width:64ch;
+}
+.note .etiq{
+  font-family:var(--mono); font-size:10px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--rouge); display:block; margin-bottom:3px;
+}
+.note p{margin:0;color:var(--encre-2);font-size:15px}
+
+.choix{border-left:2px solid var(--petrole);padding:2px 0 2px 15px;margin:16px 0;max-width:64ch}
+.choix .etiq{
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--petrole);display:block;margin-bottom:3px;
+}
+.choix p{margin:0;color:var(--encre-2);font-size:15px}
+
+.branches{display:grid;gap:10px;margin:18px 0 4px}
+@media(min-width:720px){.branches{grid-template-columns:1fr 1fr}}
+.branche{
+  border:1px solid var(--trait); border-radius:3px; padding:13px 15px;
+  background:var(--surface-2); transition:opacity .16s;
+}
+.branche.estompe{opacity:.22}
+.branche h4{
+  font-family:var(--grot);font-weight:600;font-size:13.5px;margin:0 0 6px;
+  display:flex;align-items:center;gap:8px;
+}
+.fil{width:18px;height:2px;background:var(--petrole);flex:none}
+.branche p{margin:0;font-size:14px;color:var(--encre-2);line-height:1.55}
+.branche .outil{
+  font-family:var(--mono);font-size:10.5px;color:var(--encre-3);
+  letter-spacing:.05em;display:block;margin-top:7px;
+}
+
+
+/* ---------- sous-étapes ---------- */
+.pas{display:grid;gap:0;margin:18px 0 6px;border-top:1px solid var(--trait)}
+.pas > .r{
+  display:grid; grid-template-columns:38px 84px 1fr; gap:0 14px; align-items:start;
+  padding:11px 0; border-bottom:1px solid var(--trait);
+}
+@media(max-width:640px){
+  .pas > .r{grid-template-columns:34px 1fr;}
+  .pas > .r .qui{grid-column:2;margin-bottom:4px}
+  .pas > .r .quoi{grid-column:2}
+}
+.pas .ref{
+  font-family:var(--mono); font-size:11px; font-weight:600; color:var(--encre-3);
+  letter-spacing:.04em; padding-top:2px;
+}
+.qui{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.11em; text-transform:uppercase;
+  padding:3px 0 0; font-weight:500;
+}
+.qui.a{color:var(--orange)}
+.qui.c{color:var(--petrole)}
+.quoi{margin:0;font-size:15px;color:var(--encre-2);line-height:1.55;max-width:60ch}
+.quoi strong{color:var(--encre);font-weight:600}
+.quoi .cmd{margin:9px 0 2px;font-size:11.5px}
+.quoi em{font-style:normal;font-family:var(--mono);font-size:12.5px;color:var(--encre);
+  background:var(--papier-2);padding:1px 5px;border-radius:2px}
+
+/* ---------- pannes ---------- */
+.section-pannes{margin-top:64px;padding-top:40px;border-top:1px solid var(--trait)}
+h2{
+  font-family:var(--grot);font-weight:700;font-size:clamp(22px,3vw,30px);
+  letter-spacing:-.015em;margin:0 0 10px;
+}
+.recherche{
+  width:100%;max-width:380px;font:inherit;font-size:14px;padding:9px 12px;
+  border:1px solid var(--trait);border-radius:3px;background:var(--surface);
+  color:var(--encre);margin:20px 0 26px;font-family:var(--grot);
+}
+.recherche:focus-visible{outline:2px solid var(--orange);outline-offset:1px}
+.panne{
+  border-top:1px solid var(--trait); padding:20px 0;
+  display:grid; gap:6px 26px;
+}
+@media(min-width:860px){.panne{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}}
+.panne.cache{display:none}
+.panne h3{
+  font-family:var(--grot);font-weight:600;font-size:16px;margin:0 0 6px;
+  line-height:1.3;
+}
+.panne .ou{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--encre-3);display:block;margin-bottom:5px;
+}
+.panne .symptome{margin:0;color:var(--encre-2);font-size:15px}
+.remede{background:var(--surface-2);border:1px solid var(--trait);border-radius:3px;padding:13px 15px}
+.remede .etiq{
+  font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--vert);display:block;margin-bottom:5px;
+}
+.remede p{margin:0 0 8px;font-size:14.5px;color:var(--encre-2);line-height:1.55}
+.remede p:last-child{margin-bottom:0}
+.remede code{font-size:12px}
+
+footer{
+  margin-top:56px;padding-top:22px;border-top:1px solid var(--trait);
+  font-family:var(--mono);font-size:11px;color:var(--encre-3);letter-spacing:.03em;
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="enveloppe">
+<header>
+  <p class="kicker">NarratiFluent · funnels 1 à 3 · révision du 12 septembre 2026</p>
+  <h1>La chaîne de production, étape par étape</h1>
+  <p class="chapo">Le trajet complet d'une publicité, du brief au Drive. Les <strong>losanges orange</strong> sont les points où rien n'avance sans la validation d'Adrien. Les <strong>traits rouges</strong> sont des pannes déjà survenues — chacune a coûté du temps, et chacune a son garde-fou en bas de page.</p>
+</header>
+
+<div class="filtres">
+  <div class="filtres-inner">
+    <span class="filtres-titre">Format</span>
+    <button class="puce" data-format="tous" aria-pressed="true">Tous</button>
+    <button class="puce" data-format="ugc" aria-pressed="false">UGC IA</button>
+    <button class="puce" data-format="preuve" aria-pressed="false">Preuve client</button>
+    <button class="puce" data-format="broll" aria-pressed="false">B-Rolls + voix off</button>
+    <button class="puce" data-format="archive" aria-pressed="false">Archives</button>
+    <button class="puce" data-format="anim" aria-pressed="false">Animation</button>
+    <button class="puce" data-format="reel" aria-pressed="false">Tournage réel</button>
+  </div>
+</div>
+
+<div class="ligne" id="ligne">
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">1</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Le brief</span><span class="sous">Suivi Crea</span></button>
+    <div class="corps" hidden>
+      <div class="pas">
+        <div class="r"><span class="ref">1a</span><span class="qui a">Adrien</span><p class="quoi">Dit quelles publicités lancer — « on part sur les 130 à 139 » — ou remplit lui-même les lignes du Suivi Crea.</p></div>
+        <div class="r"><span class="ref">1b</span><span class="qui c">Claude</span><p class="quoi">Lit la ligne dans le classeur et relève les quatre dimensions : <strong>format, angle, hook, avatar</strong>.<span class="cmd">python3 .claude/skills/rediger-ads/scripts/lire_suivi.py --ad 133</span></p></div>
+        <div class="r"><span class="ref">1c</span><span class="qui c">Claude</span><p class="quoi">Déduit la VSL de <strong>l'onglet</strong> où se trouve la ligne — et donc la personne grammaticale et les mots interdits. Funnel 1 : Adrien, vouvoiement. Funnel 2 : Céline, tutoiement. Funnel 3 : Adrien Santoro, vouvoiement. Ça ne se demande pas, ça se lit.</p></div>
+        <div class="r"><span class="ref">1d</span><span class="qui c">Claude</span><p class="quoi">Lit le <strong>statut</strong>, qui n'est écrit nulle part : il est porté par la couleur de fond de la cellule. La légende est relue dans le classeur à chaque appel, jamais recopiée dans le code.</p></div>
+        <div class="r"><span class="ref">1e</span><span class="qui c">Claude</span><p class="quoi">Relève la <strong>technologie de production</strong>, entre parenthèses dans la colonne Format : <em>UGC AI femme 50 ans (Argil)</em>, <em>Interview podcast (tournage réel)</em>. C'est elle qui décide de la branche à l'étape 5.</p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue</span><p>La colonne Format porte aussi la technologie entre parenthèses. Écrire « tournage réel » plutôt que de laisser vide — une absence d'information ne doit jamais vouloir dire quelque chose.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">2</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Le script</span><span class="sous">02-SCRIPTS</span></button>
+    <div class="corps" hidden>
+      <div class="pas">
+        <div class="r"><span class="ref">2a</span><span class="qui c">Claude</span><p class="quoi">Charge la matrice de l'avatar, <strong>uniquement sa section « INPUT Claude ADS »</strong> : le bloc invariant plus l'encart de la VSL visée. La page de vente brute ne rentre jamais dans le contexte d'écriture — elle fait dériver la rédaction vers le pitch produit.</p></div>
+        <div class="r"><span class="ref">2b</span><span class="qui c">Claude</span><p class="quoi">Propose lui-même l'angle et le hook. L'initiative est de son côté sur les quatre dimensions ; Adrien juge ce qu'on lui apporte, il ne fournit pas la matière.</p></div>
+        <div class="r"><span class="ref">2c</span><span class="qui c">Claude</span><p class="quoi">Rédige le script vidéo avec ses indications de tournage. <strong>L'AdCopy et les Headlines ne se rédigent pas</strong> : ce sont des jeux fixes attachés à l'avatar, repris tels quels.</p></div>
+        <div class="r"><span class="ref">2d</span><span class="qui c">Claude</span><p class="quoi">Passe la <strong>Copy Checklist</strong> sur un contexte neuf, pour ne pas être juge et partie. Un échec sur un critère éliminatoire déclenche une réécriture sans qu'Adrien ait à le demander.</p></div>
+        <div class="r"><span class="ref">2e</span><span class="qui c">Claude</span><p class="quoi">Dépose le document dans le Drive au format imposé, et passe la ligne en <strong>bleu</strong> au Suivi.</p></div>
+        <div class="r"><span class="ref">2f</span><span class="qui a">Adrien</span><p class="quoi">Relit. Corrige, écarte, réoriente. Rien ne sort jamais en « prêt » : tout arrive en « à relire ».</p></div>
+        <div class="r"><span class="ref">2g</span><span class="qui c">Claude</span><p class="quoi">Consigne chaque recadrage dans <em>journal-corrections.md</em> avec sa date et son numéro d'ad. Tous les deux ou trois batches, les remarques récurrentes sont proposées à la promotion en règle permanente.</p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Un script validé est intangible. Quand une difficulté de production apparaît — une transition qui s'entend, un mot mal articulé — la solution se cherche dans la chaîne technique, jamais dans le texte.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">3</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Le découpage et le casting</span><span class="sous">casting.json</span></button>
+    <div class="corps" hidden>
+      <div class="pas">
+        <div class="r"><span class="ref">3a</span><span class="qui c">Claude</span><p class="quoi">Découpe le script en répliques par rôle.<span class="cmd">python3 04-PRODUCTION/scripts/decouper_dialogue.py 02-SCRIPTS/ADS-133/AdCopy-133.md</span></p></div>
+        <div class="r"><span class="ref">3b</span><span class="qui c">Claude</span><p class="quoi">Écrit <em>casting.json</em>. <strong>Tout ce qui décide vit là</strong> : les voix par rôle, la stabilité, la longueur des silences, la vitesse, la musique et son gain, le souffle, le type d'écran de fin, les corrections de texte dit. Les scripts ne font qu'exécuter — une correction devient une ligne de données, pas une ligne de code.</p></div>
+        <div class="r"><span class="ref">3c</span><span class="qui c">Claude</span><p class="quoi">Cherche d'abord dans <em>catalogue-voix.json</em>. Si le personnage existe déjà — Jacques pour l'homme de 70 ans, Laurent pour celui de 60, Paul pour le narrateur documentaire — <strong>on rejoue le casting sans rien redemander</strong>.</p></div>
+        <div class="r"><span class="ref">3d</span><span class="qui c">Claude</span><p class="quoi">Sinon : cherche par <strong>âge et caractère</strong> dans les voix partagées — viser <em>grumpy</em>, <em>raspy</em>, <em>mature</em>, <em>casual</em>, se méfier de <em>professional</em> et <em>narrator</em> qui donnent l'articulation de speaker qu'Adrien rejette.</p></div>
+        <div class="r"><span class="ref">3e</span><span class="qui c">Claude</span><p class="quoi">Monte une planche de <strong>cinq candidates</strong>, jamais une seule — enchaînées dans un fichier, sur les phrases du script et non sur un texte neutre, <strong>au débit réel de la publicité</strong>, accélération comprise.</p></div>
+        <div class="r"><span class="ref">3f</span><span class="qui a">Adrien</span><p class="quoi">Écoute et donne un numéro. Son critère : est-ce que ça sonne IA. Une voix qui prononce le <em>e</em> muet en fin de mot — « trois secondeuh » — est éliminée quels que soient son âge et son timbre.</p></div>
+      </div>
+      <div class="choix"><span class="etiq">Choix</span><p>Un casting validé se rejoue. Jacques pour l'homme de 70 ans, Laurent pour celui de 60, Paul pour le narrateur documentaire. On ne recaste que si le script demande un personnage que le stock ne contient pas — ça évite à Adrien une planche de cinq voix à écouter.</p></div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Une correction de prononciation écrite dans le texte joué (« hipo-campe ») peut déplacer les frontières de répliques au découpage : une réplique se réduit à un mot et le suivant bascule sur le plan d'après.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">4</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">La bande son</span><span class="sous">ElevenLabs</span></button>
+    <div class="corps" hidden>
+      <span class="cmd">python3 04-PRODUCTION/scripts/produire_ad.py 04-PRODUCTION/medias/ADS-133 02-SCRIPTS/ADS-133/AdCopy-133.dialogue.json
+python3 04-PRODUCTION/scripts/verifier_voix.py 04-PRODUCTION/medias/ADS-133/bande-son.json</span>
+      <div class="pas">
+        <div class="r"><span class="ref">4a</span><span class="qui c">Claude</span><p class="quoi">Génère <strong>un tour de parole en un seul appel</strong> — tout ce qu'un personnage dit d'affilée. Modèle <em>eleven_v3</em>, stabilité 0 : c'est ce réglage, et lui seul, qui sort du rendu lisse.</p></div>
+        <div class="r"><span class="ref">4b</span><span class="qui c">Claude</span><p class="quoi">Découpe la prise <strong>après coup</strong>, sur les horodatages de mots rendus par la reconnaissance vocale, en coupant aux respirations que le modèle a lui-même posées. Les tranches se recollent au sample près : la bande reste la prise d'origine.</p></div>
+        <div class="r"><span class="ref">4c</span><span class="qui c">Claude</span><p class="quoi">Contrôle la fin de chaque prise : une prise qui finit normalement <strong>décroît</strong>. Une prise tronquée s'arrête à plein niveau, au milieu d'un mot, et l'API ne le signale pas.</p></div>
+        <div class="r"><span class="ref">4d</span><span class="qui c">Claude</span><p class="quoi">Assemble, puis empile les couches sonores dans l'ordre : l'ambiance, la <strong>musique</strong> à son gain, le <strong>souffle</strong> pour les formats d'archive. Chaque couche est mesurée dans les silences de la voix après coup.</p></div>
+        <div class="r"><span class="ref">4e</span><span class="qui c">Claude</span><p class="quoi">Lance le contrôle de transcription, <strong>bloquant</strong> : chaque réplique est retranscrite et comparée au texte attendu.<span class="cmd">python3 04-PRODUCTION/scripts/verifier_voix.py 04-PRODUCTION/medias/ADS-133/bande-son.json</span></p></div>
+        <div class="r"><span class="ref">4f</span><span class="qui c">Claude</span><p class="quoi">Mesure le <strong>débit</strong> sur la piste assemblée et vise 200 mots/minute. Les voix clonées tournent naturellement entre 115 et 170 — le débit d'un livre audio, pas d'une publicité.</p></div>
+        <div class="r"><span class="ref">4g</span><span class="qui c">Claude</span><p class="quoi">Dépose <strong>un seul fichier</strong> dans <em>A-ECOUTER</em>, nommé sans ambiguïté, et l'envoie.</p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Le contrôle crie au loup sur les chiffres : « plus de 900 » est lu « neuf cents », et comparé à la lettre ça sort en écart. Vérifier le texte entendu avant de conclure.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="porte" data-formats="tous">
+    <div class="numero"></div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Validation — la maquette audio</span><span class="sous">Adrien</span></button>
+    <div class="corps" hidden>
+      <p>C'est le point de contrôle <strong>le moins cher de toute la chaîne</strong> : quelques milliers de caractères ElevenLabs, contre une centaine de crédits d'avatar ou dix minutes de rendu par format.</p>
+      <div class="pas">
+        <div class="r"><span class="ref">V1a</span><span class="qui a">Adrien</span><p class="quoi">Écoute et répond. Trois réponses possibles : <strong>« ok »</strong>, un <strong>facteur de vitesse</strong> — « applique un ×1,2 » —, ou un <strong>défaut nommé</strong> : trop lisse, trop lent, haché, des « euh » en fin de mot.</p></div>
+        <div class="r"><span class="ref">V1b</span><span class="qui c">Claude</span><p class="quoi">Si c'est un facteur : il s'applique <strong>à la version qu'il vient d'écouter</strong> et se <strong>cumule</strong> avec ce qui existe déjà. Une maquette à ×1,15 qui reçoit un ×1,2 se règle à ×1,38, jamais à ×1,2.</p></div>
+        <div class="r"><span class="ref">V1c</span><span class="qui c">Claude</span><p class="quoi">Compare la durée et le débit à la version précédente, et vérifie que <strong>le sens de la variation correspond</strong>. Une demande d'accélération qui produit un fichier plus long est une erreur d'interprétation, pas un choix.</p></div>
+        <div class="r"><span class="ref">V1d</span><span class="qui c">Claude</span><p class="quoi">Si c'est un défaut de voix : on ne règle pas, <strong>on recaste</strong>. Une nouvelle planche de cinq, pas un réglage de plus sur la même voix.</p></div>
+        <div class="r"><span class="ref">V1e</span><span class="qui a">Adrien</span><p class="quoi">Dit « ok ». <strong>À partir de cet instant la bande son est gelée.</strong></p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue — la plus coûteuse</span><p><strong>Une correction qui oblige à régénérer une prise validée n'est pas une correction, c'est une nouvelle maquette.</strong> Deux générations du même clone ne rendent pas le même timbre, et Adrien l'entend immédiatement. Elle repasse donc par lui avant d'entrer en montage — même quand la correction vient de lui.</p></div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Poser une musique oblige à réassembler la piste. Vérifier après coup que la voix validée n'a pas bougé : même longueur au sample près, écart mesuré sous −60 dB.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">5</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">L'image — les six branches</span><span class="sous">selon le format</span></button>
+    <div class="corps" hidden>
+      <p>C'est ici que la chaîne se ramifie. Le reste du trajet est commun, mais cette étape change entièrement d'outil, de coût et de pièges selon le format lu à l'étape 1e.</p>
+      <div class="pas">
+        <div class="r"><span class="ref">5a</span><span class="qui c">Claude</span><p class="quoi"><strong>Chiffre avant de dépenser.</strong> Le coût se calcule à partir de la timeline, avant la moindre génération, et se communique quand il change d'ordre de grandeur.<span class="cmd">python3 04-PRODUCTION/scripts/cout_argil.py</span></p></div>
+        <div class="r"><span class="ref">5b</span><span class="qui c">Claude</span><p class="quoi">Prépare la matière de la branche : photo source pour un avatar, planche de visages pour un casting, requêtes de recherche pour des plans de banque, descriptions pour un générateur.</p></div>
+        <div class="r"><span class="ref">5c</span><span class="qui c">Claude</span><p class="quoi">Sur les formats à personnage : monte une <strong>planche de 30 à 40 visages</strong> numérotés, tous conformes à l'audience visée — français, blancs, dans la tranche d'âge de l'avatar.</p></div>
+        <div class="r"><span class="ref">5d</span><span class="qui a">Adrien</span><p class="quoi">Donne un numéro de visage.</p></div>
+        <div class="r"><span class="ref">5e</span><span class="qui c">Claude</span><p class="quoi">Lance les rendus. <strong>La voix part à sa vitesse naturelle</strong>, jamais accélérée : le modèle ne synchronise pas des lèvres sur un débit de 245 mots/minute. L'accélération s'applique à l'image, au montage, du même facteur.</p></div>
+        <div class="r"><span class="ref">5f</span><span class="qui c">Claude</span><p class="quoi">Vérifie chaque plan de banque à la <strong>détection de visage</strong> avant de le retenir, et écarte tout ce qui dépasse 5 % du cadre.</p></div>
+      </div>
+      <div class="branches">
+        <div class="branche" data-formats="ugc"><h4><span class="fil"></span>UGC IA</h4><p>Un seul personnage face caméra de bout en bout. Une photo source, un rendu, découpé ensuite en autant de plans que de répliques.</p><span class="outil">Argil · HeyGen · monter_ugc.py</span></div>
+        <div class="branche" data-formats="preuve"><h4><span class="fil"></span>Preuve client</h4><p>Ouverture sur le visage du témoin en punch-in, puis des plans de banque sans aucun autre visage, et la carte à bouton.</p><span class="outil">portraits · brolls-NNN · monter_preuve.py</span></div>
+        <div class="branche" data-formats="broll"><h4><span class="fil"></span>B-Rolls + voix off</h4><p>Entièrement faite de plans de banque. Coût nul, aucun crédit engagé.</p><span class="outil">Pexels · Pixabay · chercher_brolls.py</span></div>
+        <div class="branche" data-formats="archive"><h4><span class="fil"></span>Archives</h4><p>Films libres de droits, traitement vieille bobine, ronronnement de projecteur, carton de fin en noir et blanc.</p><span class="outil">archive.org · vieux_film.py</span></div>
+        <div class="branche" data-formats="anim"><h4><span class="fil"></span>Animation</h4><p>Plans générés un par un, style tenu par une description commune, puis assemblés comme des plans de banque.</p><span class="outil">Veo 3.1 · prompts_NNN.py</span></div>
+        <div class="branche" data-formats="reel"><h4><span class="fil"></span>Tournage réel</h4><p>Adrien ou Céline filment. L'image ne bouge pas au montage : un zoom propre trahit aussitôt le côté pris sur le vif.</p><span class="outil">rush · monter_celine.py · mouvements=False</span></div>
+      </div>
+      <div class="choix"><span class="etiq">Choix — et il coûte cher</span><p>Ne faire passer par un générateur d'avatar que les publicités qui ont <strong>réellement besoin d'un visage qui parle</strong>. Une publicité en B-Rolls revient à zéro crédit ; une publicité à avatar de deux minutes coûte environ 370 crédits, dont 90 % sur la seule durée de vidéo.</p></div>
+      <div class="note"><span class="etiq">Panne connue</span><p>On envoie au générateur d'avatar <strong>la voix à sa vitesse naturelle</strong>. Le modèle ne synchronise pas des lèvres sur un débit accéléré : l'accélération s'applique à l'image, au montage, du même facteur.</p></div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Tout personnage casté ressemble à l'audience visée — français, blanc, dans la tranche d'âge de l'avatar. Et pour un générateur, <strong>ce qu'on ne dit pas, il l'invente, et il l'invente mal</strong> : l'âge et l'apparence se écrivent explicitement.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="porte" data-formats="tous">
+    <div class="numero"></div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Validation — les rendus bruts</span><span class="sous">Adrien</span></button>
+    <div class="corps" hidden>
+      <p>Le principe n'est pas la durée de l'étape mais <strong>ce qu'elle coûterait à refaire</strong>. Un rendu d'avatar raté découvert après le montage, c'est le montage refait en plus du rendu.</p>
+      <div class="pas">
+        <div class="r"><span class="ref">V2a</span><span class="qui c">Claude</span><p class="quoi">Assemble <strong>un seul envoi</strong> : six secondes de chaque rendu d'avatar avec son numéro d'ad en surimpression, les plans d'animation sur une planche, l'effet d'ouverture des preuves clients.</p></div>
+        <div class="r"><span class="ref">V2b</span><span class="qui a">Adrien</span><p class="quoi">Regarde. Ce qu'il cherche : est-ce que ça fait faux. Un sourire tenu trop longtemps, une ressemblance approximative, un rendu trop lisse.</p></div>
+        <div class="r"><span class="ref">V2c</span><span class="qui c">Claude</span><p class="quoi">En cas de refus : reprend <strong>à la source</strong> — autre photo, autre description, autre visage — jamais un rattrapage au montage.</p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Un grand sourire tenu pendant soixante-dix secondes de parole ne ressemble à rien d'humain. La photo source d'Adrien doit être <strong>neutre, bouche à peine entrouverte</strong> — assez pour que le générateur ait une référence de dentition, pas assez pour que ce soit un sourire.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">6</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">La planche des plans</span><span class="sous">avant tout rendu</span></button>
+    <div class="corps" hidden>
+      <div class="pas">
+        <div class="r"><span class="ref">6a</span><span class="qui c">Claude</span><p class="quoi">Construit le plan visuel : quelle image sur quelle réplique, et à quelle seconde d'entrée dans le fichier source.</p></div>
+        <div class="r"><span class="ref">6b</span><span class="qui c">Claude</span><p class="quoi">Tire une image fixe de chaque plan <strong>dans les trois formats</strong>, en appliquant exactement le recadrage que fera le montage.<span class="cmd">python3 04-PRODUCTION/scripts/planche_plans.py 133</span></p></div>
+        <div class="r"><span class="ref">6c</span><span class="qui c">Claude</span><p class="quoi">Regarde la planche lui-même avant de l'envoyer, et corrige ce qui saute aux yeux.</p></div>
+        <div class="r"><span class="ref">6d</span><span class="qui a">Adrien</span><p class="quoi">Vérifie les colonnes <strong>1:1 et 16:9</strong>. Un crâne coupé, un sujet décentré, un recadrage qui a mangé l'essentiel du plan. Le 9:16 est le format natif : il est toujours bon, et c'est exactement pour ça qu'il ne dit rien des deux autres.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="porte" data-formats="tous">
+    <div class="numero"></div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Validation — la planche</span><span class="sous">Adrien</span></button>
+    <div class="corps" hidden>
+      <p>Avant de lancer quoi que ce soit de long, se demander <strong>ce qui restera à valider après</strong>. Si la réponse n'est pas « rien », c'est qu'on s'y prend dans le mauvais ordre.</p>
+      <div class="pas">
+        <div class="r"><span class="ref">V3a</span><span class="qui c">Claude</span><p class="quoi">Groupe <strong>tout</strong> ce qui demande son œil dans un seul envoi : la planche des plans, les extraits, les cartes de fin, les propositions restées en attente.</p></div>
+        <div class="r"><span class="ref">V3b</span><span class="qui a">Adrien</span><p class="quoi">Tranche en une fois.</p></div>
+        <div class="r"><span class="ref">V3c</span><span class="qui c">Claude</span><p class="quoi">Part travailler vingt ou trente minutes <strong>sans le déranger</strong>. Chaque phase de calcul immobilise sa machine, et chaque question le rappelle au clavier : alterner les deux additionne les nuisances au lieu de les compenser.</p></div>
+        <div class="r"><span class="ref">V3d</span><span class="qui c">Claude</span><p class="quoi">Après une correction, <strong>un extrait de quelques secondes avant le complet</strong>. Ne jamais relancer un montage entier sur la foi d'une correction non vue.<span class="cmd">python3 04-PRODUCTION/scripts/monter_ads_NNN.py "9:16" --extrait 15</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">7</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Le montage</span><span class="sous">FFmpeg</span></button>
+    <div class="corps" hidden>
+      <span class="cmd">python3 04-PRODUCTION/scripts/monter_ads_133.py "9:16" "1:1" "16:9"</span>
+      <div class="pas">
+        <div class="r"><span class="ref">7a</span><span class="qui c">Claude</span><p class="quoi">Pose le <strong>verrou</strong> de la publicité et vérifie que la bande son n'est pas plus vieille que son casting. Les deux garde-fous refusent de démarrer plutôt que de produire un résultat faux.</p></div>
+        <div class="r"><span class="ref">7b</span><span class="qui c">Claude</span><p class="quoi">Fabrique chaque plan à la longueur de sa réplique. Sur un plan parlé, <strong>le silence qui suit est reporté sur le plan d'après</strong> : prolonger la dernière image donne le visage figé, bouche entrouverte.</p></div>
+        <div class="r"><span class="ref">7c</span><span class="qui c">Claude</span><p class="quoi">Rend la fin de chaque plan parlé au suivant — le rendu s'arrête quelques images avant son propre audio — et recule d'autant son point d'entrée.</p></div>
+        <div class="r"><span class="ref">7d</span><span class="qui c">Claude</span><p class="quoi">Applique les mouvements d'appareil : zoom lent ou coupe serrée, en alternance d'un plan parlé au suivant. <strong>Sauf sur un tournage réel</strong>, où l'image ne bouge pas — un zoom propre trahit le côté pris sur le vif.</p></div>
+        <div class="r"><span class="ref">7e</span><span class="qui c">Claude</span><p class="quoi">Découpe les sous-titres en bribes calées au mot, pose l'habillage, puis encode <strong>un format après l'autre</strong>, jamais en parallèle.</p></div>
+      </div>
+      <h4 style="font-family:var(--grot);font-weight:600;font-size:14px;margin:22px 0 0">Le recadrage, format par format</h4>
+      <div class="branches">
+        <div class="branche" data-formats="tous"><h4><span class="fil"></span>1:1 — on recadre</h4><p>Toute la largeur gardée, on coupe haut et bas. Jamais de fond flou : « là où toi tu as du flou sur les côtés, moi j'ai du vrai paysage ».</p></div>
+        <div class="branche" data-formats="ugc reel"><h4><span class="fil"></span>16:9 d'une UGC smartphone</h4><p>Cadre vertical entier, centré, sur <strong>noir franc</strong>. Un 16:9 recadré depuis un vertical ne garde que 32 % de la hauteur : sur quelqu'un qui parle face caméra, ça coupe le crâne.</p></div>
+        <div class="branche" data-formats="preuve broll archive anim"><h4><span class="fil"></span>16:9 de tout le reste</h4><p>On recadre, comme le carré.</p></div>
+        <div class="branche" data-formats="tous"><h4><span class="fil"></span>Tout habillage</h4><p>Sous-titres, appel à l'action, cartes : les tailles se calculent sur le <strong>petit côté</strong> du cadre, les positions en fraction de la hauteur. Jamais en pixels fixes.</p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Un écran de fin porte déjà son appel à l'action : on n'en incruste jamais un second, et le sous-titre se tait pendant sa durée. C'est déduit du type du dernier plan, pas passé en argument — une consigne qu'il faut penser à repasser finit toujours par être oubliée.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">8</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Les contrôles</span><span class="sous">avant de livrer</span></button>
+    <div class="corps" hidden>
+      <div class="pas">
+        <div class="r"><span class="ref">8a</span><span class="qui c">Claude</span><p class="quoi">Mesure <strong>les durées</strong> — image et son — dans les trois formats. Elles doivent être identiques.<span class="cmd">python3 04-PRODUCTION/scripts/verifier_formats.py 133</span></p></div>
+        <div class="r"><span class="ref">8b</span><span class="qui c">Claude</span><p class="quoi">Compare <strong>les dates</strong> des trois fichiers. Un écart important signale un mélange de rendus — c'est un indice, pas une preuve.</p></div>
+        <div class="r"><span class="ref">8c</span><span class="qui c">Claude</span><p class="quoi">Compare <strong>l'empreinte du son décodé</strong>. Trois formats d'un même montage portent la même bande au sample près ; deux montages différents, jamais. C'est la preuve.</p></div>
+        <div class="r"><span class="ref">8d</span><span class="qui c">Claude</span><p class="quoi">Extrait la <strong>même image numérotée</strong> dans les trois formats — <em>select='eq(n,900)'</em> et non un <em>-ss</em> par seconde, qui retombe sur des images différentes et fait croire à un décalage qui n'existe pas.</p></div>
+        <div class="r"><span class="ref">8e</span><span class="qui c">Claude</span><p class="quoi">Regarde les <strong>cinq dernières secondes</strong> dans les trois formats : le bouton entier en haut, la ligne dessous, les chevrons dessous, aucun sous-titre par-dessus.</p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue</span><p><code>ffprobe</code> rend parfois une sortie vide. Un 16:9 parfaitement valide a été annoncé à « image 0,00 s ». Un garde-fou qui donne de fausses alertes finit par ne plus être lu : il réessaie avant de conclure.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="porte" data-formats="tous">
+    <div class="numero"></div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">Validation — les trois formats</span><span class="sous">Adrien</span></button>
+    <div class="corps" hidden>
+      <p>C'est le dernier point où une erreur coûte encore moins qu'une publicité lancée.</p>
+      <div class="pas">
+        <div class="r"><span class="ref">V4a</span><span class="qui c">Claude</span><p class="quoi">Envoie la publicité complète en 9:16, compressée, <strong>plus la planche des trois formats</strong> sur quatre ou cinq instants dont la fin — pour qu'il juge les trois d'un coup d'œil sans ouvrir neuf fichiers.</p></div>
+        <div class="r"><span class="ref">V4b</span><span class="qui a">Adrien</span><p class="quoi">Valide, ou nomme le défaut.</p></div>
+        <div class="r"><span class="ref">V4c</span><span class="qui c">Claude</span><p class="quoi">Sur validation : <strong>livre immédiatement</strong>. Pas plus tard, pas après autre chose.</p></div>
+      </div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Le Drive n'était pas mis à jour après un nouveau rendu : il a regardé pendant deux heures des fichiers périmés. <strong>On livre au moment de la validation, pas plus tard.</strong></p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">9</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">La livraison</span><span class="sous">Drive + Suivi</span></button>
+    <div class="corps" hidden>
+      <span class="cmd">python3 04-PRODUCTION/scripts/livrer_ad.py 133 04-PRODUCTION/medias/ADS-133
+python3 .claude/skills/rediger-ads/scripts/colorer_ad.py 133 "Ads prête à être lancée"</span>
+      <div class="pas">
+        <div class="r"><span class="ref">9a</span><span class="qui c">Claude</span><p class="quoi">Repasse le contrôle des trois formats — absence, durées, dates, empreinte du son — et <strong>refuse de livrer</strong> si l'un des quatre tombe.</p></div>
+        <div class="r"><span class="ref">9b</span><span class="qui c">Claude</span><p class="quoi">Compresse chaque format <strong>sous cinquante mégaoctets</strong>.</p></div>
+        <div class="r"><span class="ref">9c</span><span class="qui c">Claude</span><p class="quoi">Dépose dans le dossier Drive de la publicité. Un dépôt <strong>remplace</strong> un homonyme au lieu d'en créer un second : le lien de partage et l'historique du fichier sont conservés.</p></div>
+        <div class="r"><span class="ref">9d</span><span class="qui c">Claude</span><p class="quoi">Passe la ligne en <strong>orange</strong> au Suivi Crea, puis <strong>relit le Suivi</strong> pour vérifier que la couleur a pris.</p></div>
+        <div class="r"><span class="ref">9e</span><span class="qui c">Claude</span><p class="quoi">Annonce précisément ce qui a été écrit et où. Adrien a besoin de voir le résultat, pas d'approuver l'intention.</p></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<section class="section-pannes">
+  <h2>Le cahier des pannes</h2>
+  <p class="chapo">Chaque entrée est arrivée pour de vrai. La colonne de droite dit ce qui empêche mécaniquement qu'elle revienne — parce qu'une bonne intention ne tient pas, et qu'un garde-fou dans le code tient.</p>
+  <input class="recherche" type="search" id="q" placeholder="Chercher une panne, un symptôme, un fichier…" aria-label="Chercher dans le cahier des pannes">
+  <div id="pannes">
+
+    <article class="panne">
+      <div><span class="ou">montage · monter_video.py</span><h3>Trois formats venus de trois montages différents</h3><p class="symptome">Le 9:16 était bon, le 1:1 et le 16:9 décalés. Les durées concordaient, donc aucune mesure ne le signalait — seule l'image trahissait le mélange.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Un verrou par publicité, portant le numéro du processus, posé au début de chaque montage et retiré à la sortie. S'il est encore vivant, le second montage est refusé.</p><p><strong>Et le verrou ne se verrouille pas lui-même</strong> : les trois formats se montent dans le même processus, et le verrou du 9:16 refusait le 1:1. Le garde-fou ne livrait qu'un format sur trois.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">bande son · monter_video.py</span><h3>Une publicité montée sans sa musique</h3><p class="symptome">La musique avait été écrite dans le casting à 18h17, la maquette datait de 17h54, le montage de 20h29 a donc été fabriqué sur une bande son sans musique. Rien ne l'a signalé.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p><code>_casting_plus_recent()</code> compare les dates de <code>casting.json</code> et de la maquette au début de chaque montage, et refuse de démarrer si la source est plus récente que son rendu.</p><p>Le message dit quoi relancer, pas seulement que c'est cassé.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">voix · ElevenLabs</span><h3>Le timbre change au milieu d'une publicité</h3><p class="symptome">Deux générations successives du même clone ne partagent ni le niveau, ni le fond sonore, ni l'intonation. Sur une seule publicité, l'écart de sonie entre répliques atteignait douze LUFS et l'écart de fond vingt et un décibels.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Un tour de parole part en <strong>une seule</strong> génération, découpée après coup sur les horodatages de mots. Les tranches se recollent au sample près.</p><p>Aucun correctif ne rattrape une jointure : fondus, souffle de salle, appariement de sonie, fondu enchaîné — tous essayés, tous insuffisants. La seule façon de ne pas l'entendre est de ne pas en créer.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">voix · generer_voix.py</span><h3>Une réplique escamotée, et un plan calé à côté</h3><p class="symptome">Le cache des horodatages de mots était indexé sur le <strong>nom</strong> du fichier. Une bande son refaite gardait l'ancien minutage : le découpage dérivait silencieusement et la dernière réplique sortait vide.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Le cache est indexé sur une <strong>empreinte du contenu</strong> — <code>sha1</code> des octets du fichier — et non sur son nom. Un fichier qui change invalide son minutage tout seul.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">montage · FFmpeg</span><h3>Le punch-in qui dérive hors du visage</h3><p class="symptome">Le cadre grossissait pendant que le rognage restait figé, et le visage glissait vers le bas à droite. Vu deux fois par Adrien avant d'être compris.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Dans cette version de FFmpeg, les coordonnées de <code>crop</code> ne sont évaluées <strong>qu'une seule fois</strong>, à la première image. Sur une image fixe il faut <code>zoompan</code>, qui réévalue <code>z</code>, <code>x</code> et <code>y</code> à chaque image.</p><p>Et le contrôle se fait à la mesure : la position du visage dans le cadre, avant et après, pas à l'œil.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">montage · FFmpeg</span><h3>Deux secondes d'image figée à la fin</h3><p class="symptome">Le rendu se prolongeait après la dernière syllabe — sur un plan d'avatar, cela donne le visage figé, bouche entrouverte.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p><code>-shortest</code> <strong>ne borne pas</strong> un graphe alimenté par <code>-loop 1</code> : l'image des chevrons entre en boucle infinie. La borne est explicite.</p><p>Et le nombre d'images se <strong>fixe</strong>, il ne se déduit pas d'une durée : demander « 76,463 s » laissait l'encodeur arrondir différemment selon le format — 2295 images en 9:16, 2293 en 1:1. Deux images d'écart suffisent à ce que la bouche passe d'ouverte à fermée sur un arrêt sur image.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">habillage · monter_video.py</span><h3>La carte de fin qui déborde en 1:1 et en 16:9</h3><p class="symptome">Le bouton sortait de l'écran, le texte était plus large que lui, les chevrons tombaient dessus et le sous-titre passait par-dessus le tout. Uniquement dans les formats dérivés.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>J'avais dessiné aux proportions du vertical puis multiplié. Un 9:16 fait 1920 de haut, un 1:1 et un 16:9 n'en font que 1080 : toute mesure verticale fixe déborde.</p><p>La largeur d'un bouton est une fraction de la largeur du cadre et <strong>la taille de police se cherche</strong> pour y tenir ; les positions verticales sont des fractions de la hauteur ; le texte se dimensionne sur le <strong>petit côté</strong>.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">habillage · monter_video.py</span><h3>Le bouton derrière l'appel à l'action</h3><p class="symptome">La carte écrivait « VOIR LA PRÉSENTATION » ; l'incrustation de fin écrivait la même phrase en blanc et en gros, exactement par-dessus le bouton.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p><code>monter()</code> regarde le <strong>type du dernier plan</strong> : si c'est une carte, il supprime l'appel à l'action incrusté et fait taire le sous-titre sur sa durée. Déduit, donc jamais oublié d'une publicité à l'autre.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">habillage · chevron</span><h3>La double flèche invisible</h3><p class="symptome">L'orange de la charte sur le pull beige clair de l'avatar : rien ne se voyait, dans les trois formats.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Le chevron porte un <strong>halo sombre</strong>, comme les sous-titres portent un contour. Un élément d'habillage doit tenir sur n'importe quelle image, pas seulement sur celle qui a servi à le dessiner.</p><p>Et le carton d'archive prend le chevron <strong>blanc</strong> : l'orange de la charte y casserait le noir et blanc.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">formats · chaine_cadrage()</span><h3>Le personnage minuscule au milieu d'un flou</h3><p class="symptome">Le montage cessait de recadrer au-delà d'un tiers de surface perdue et posait l'image sur un fond flouté d'elle-même. « Pour les formats B-Rolls, il ne doit jamais y avoir ce flou de merde. »</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Le seuil ne s'applique plus aux publicités du compte : chaque format recadre pour remplir l'écran. Une exception, et une seule : le <strong>16:9 d'une UGC filmée au smartphone</strong>, qui garde son cadre vertical sur du noir franc.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">plans de coupe · casting</span><h3>Un visage étranger qui trahit la scène</h3><p class="symptome">Un podcasteur, une sculptrice, une femme de face dans un plan de réunion. Dans une preuve client, ce visage devient le témoin dans la tête du spectateur — sans lui ressembler.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Détection de visage sur chaque plan de banque avant montage, alerte au-dessus de 5 % du cadre. Les plans concernés se remplacent par des mains, des objets, des lieux vides.</p><p>Le <strong>seul</strong> visage identifiable autorisé dans une preuve client est le portrait du témoin lui-même.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">génération · Veo</span><h3>Un hippocampe, l'animal, nageant dans un cerveau</h3><p class="symptome">La description disait « one elongated seahorse shaped structure ». Le modèle a dessiné l'animal. L'interdit « no seahorse » ajouté ensuite n'a rien changé : le mot suffit.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Une description destinée à un modèle d'image ne contient <strong>ni métaphore ni mot à double sens</strong>. La structure se décrit par sa géométrie réelle et n'est pas nommée : « un repli incurvé en C, sans tête, sans queue et sans membres ».</p><p>Et les interdits se posent <strong>par famille de plan</strong> : « no human face, no body, no hands » était utile sur un cerveau et tuait les deux seuls plans montrant des gens, rendus en neurones.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">sous-titres</span><h3>« Euh » écrit à l'écran</h3><p class="symptome">Sur un tournage improvisé, la transcription porte les tics, les reprises et les amorces avalées. Un sous-titre qui écrit « euh » donne l'air d'un rush oublié au montage.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Nettoyage sur la liste de mots minutée, <strong>sans toucher aux horodatages des mots gardés</strong>. La ponctuation qui appartenait au tic part avec lui — mais seulement quand elle était portée par un mot outil, sinon elle sépare deux propositions et reste.</p><p>Et une bribe ne se termine jamais sur un mot qui appelle le suivant : « avec de » puis « la grammaire » fait buter l'œil.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">livraison · Drive</span><h3>Deux fois le même fichier dans un dossier</h3><p class="symptome">Relivrer une publicité corrigée laissait deux <code>Ads 118 9x16.mp4</code> côte à côte, et rien ne disait lequel était le bon.</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Le dépôt cherche d'abord un homonyme et réécrit son contenu au lieu d'en créer un second. Le lien de partage et l'historique du fichier sont conservés.</p></div>
+    </article>
+
+    <article class="panne">
+      <div><span class="ou">fichiers · la seule règle</span><h3>Un fichier supprimé sans demander</h3><p class="symptome">La seule autorisation qu'Adrien exige avant d'agir. Enfreinte deux fois dans la même session, chaque fois en se disant que « ce fichier est à moi, il est temporaire ».</p></div>
+      <div class="remede"><span class="etiq">Le garde-fou</span><p>Écrire par-dessus, renommer, ou laisser en place. Jamais <code>rm</code> sans avoir demandé et obtenu un oui. Les fichiers vraiment jetables s'écrivent d'emblée hors du dépôt, dans le dossier temporaire de la session.</p></div>
+    </article>
+
+  </div>
+</section>
+
+<footer>NarratiFluent · chaîne de production des publicités Meta · construite à partir du journal des corrections et des garde-fous en place dans <span style="font-family:var(--mono)">04-PRODUCTION/scripts</span></footer>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.tete').forEach(function(t){
+    t.addEventListener('click', function(){
+      var ouvert = t.getAttribute('aria-expanded') === 'true';
+      t.setAttribute('aria-expanded', ouvert ? 'false' : 'true');
+      var corps = t.parentElement.querySelector('.corps');
+      if (corps) corps.hidden = ouvert;
+    });
+  });
+
+  var puces = document.querySelectorAll('.puce');
+  puces.forEach(function(p){
+    p.addEventListener('click', function(){
+      var f = p.dataset.format;
+      puces.forEach(function(a){ a.setAttribute('aria-pressed', a === p ? 'true' : 'false'); });
+      document.querySelectorAll('.etape').forEach(function(e){
+        var liste = (e.dataset.formats || 'tous').split(' ');
+        e.classList.toggle('estompe', !(f === 'tous' || liste.indexOf('tous') > -1 || liste.indexOf(f) > -1));
+      });
+      document.querySelectorAll('.branche').forEach(function(b){
+        var liste = (b.dataset.formats || 'tous').split(' ');
+        b.classList.toggle('estompe', !(f === 'tous' || liste.indexOf('tous') > -1 || liste.indexOf(f) > -1));
+      });
+    });
+  });
+
+  var q = document.getElementById('q');
+  q.addEventListener('input', function(){
+    var v = q.value.trim().toLowerCase();
+    document.querySelectorAll('.panne').forEach(function(p){
+      p.classList.toggle('cache', v.length > 1 && p.textContent.toLowerCase().indexOf(v) === -1);
+    });
+  });
+})();
+</script>
+
+<nav class="rail-site" aria-label="Sommaire du site">
+  <a class="marque" href="{{BASE}}index.html">
+    <span class="marque-nom">Process NarratiFluent</span>
+    <span class="marque-sous">documentation interne</span>
+  </a>
+  {{SOMMAIRE}}
+</nav>
+</body>
+</html>

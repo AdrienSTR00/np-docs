@@ -58,12 +58,28 @@ def _lien(chemin):
 
 
 def _pages():
+    """Les pages du site — markdown, plus les pages HTML servies telles quelles.
+
+    **Une page peut être écrite directement en HTML.** Certaines vues ne se
+    réduisent pas à du texte : une chaîne de production se lit mieux dépliable,
+    avec un filtre par format et des étapes qu'on ouvre une à une. Le markdown
+    ne sait pas faire ça, et le forcer donnerait une page moins claire. Ces
+    pages-là portent leur propre mise en page et sont recopiées sans être
+    touchées — le générateur ne leur ajoute que leur entrée au sommaire.
+    """
     pages = []
-    for f in sorted(CONTENU.rglob('*.md')):
+    for f in sorted(list(CONTENU.rglob('*.md')) + list(CONTENU.rglob('*.html'))):
+        if f.suffix == '.html':
+            texte = f.read_text(encoding='utf-8')
+            m = re.search(r'<title>(.*?)</title>', texte, re.S)
+            titre = (m.group(1).strip() if m else f.stem)
+            pages.append({'fichier': f, 'titre': titre, 'chapo': '', 'corps': texte,
+                          'lien': _lien(f), 'section': _section(f), 'brut': True})
+            continue
         titre, chapo, corps = _lire(f)
         pages.append({'fichier': f, 'titre': titre, 'chapo': chapo, 'corps': corps,
-                      'lien': _lien(f), 'section': _section(f)})
-    return pages
+                      'lien': _lien(f), 'section': _section(f), 'brut': False})
+    return sorted(pages, key=lambda p: str(p['fichier']))
 
 
 def _base(page):
@@ -98,6 +114,15 @@ def _sommaire(pages, base, courante=None):
     return '\n'.join(out)
 
 
+def _fichiers_annexes():
+    for f in MODELE.glob('*.css'):
+        shutil.copy(f, SORTIE / f.name)
+    # `noindex` : le site est accessible à qui a le lien, invisible des moteurs.
+    (SORTIE / 'robots.txt').write_text('User-agent: *\nDisallow: /\n', encoding='utf-8')
+    # GitHub Pages sert le site tel quel, sans passer par Jekyll.
+    (SORTIE / '.nojekyll').write_text('', encoding='utf-8')
+
+
 def construire():
     if SORTIE.exists():
         shutil.rmtree(SORTIE)
@@ -109,11 +134,18 @@ def construire():
         raise SystemExit('aucun fichier dans contenu/')
 
     for p in pages:
-        md.reset()
-        corps = md.convert(p['corps'])
         cible = SORTIE / p['lien']
         cible.parent.mkdir(parents=True, exist_ok=True)
         base = _base(p)
+        if p['brut']:
+            cible.write_text(p['corps']
+                             .replace('{{BASE}}', base)
+                             .replace('{{SOMMAIRE}}', _sommaire(pages, base, p['lien'])),
+                             encoding='utf-8')
+            print(f'  {p["lien"]:44} {p["titre"]}  (page entière)')
+            continue
+        md.reset()
+        corps = md.convert(p['corps'])
         cible.write_text(gabarit
                          .replace('{{BASE}}', base)
                          .replace('{{TITRE}}', html.escape(p['titre']))
@@ -128,6 +160,13 @@ def construire():
     # page rangée dans un sous-dossier garderait ses chemins relatifs — `../` de
     # trop — et arriverait à la racine sans style et sans liens.
     a = pages[0]
+    if a['brut']:
+        (SORTIE / 'index.html').write_text(a['corps']
+            .replace('{{BASE}}', './')
+            .replace('{{SOMMAIRE}}', _sommaire(pages, './', a['lien'])), encoding='utf-8')
+        _fichiers_annexes()
+        print(f'\n{len(pages)} pages → {SORTIE}')
+        return
     md.reset()
     (SORTIE / 'index.html').write_text(gabarit
         .replace('{{BASE}}', './')
@@ -137,12 +176,7 @@ def construire():
         .replace('{{SOMMAIRE}}', _sommaire(pages, './', a['lien']))
         .replace('{{CORPS}}', md.convert(a['corps'])), encoding='utf-8')
 
-    for f in MODELE.glob('*.css'):
-        shutil.copy(f, SORTIE / f.name)
-    # `noindex` : le site est accessible à qui a le lien, invisible des moteurs.
-    (SORTIE / 'robots.txt').write_text('User-agent: *\nDisallow: /\n', encoding='utf-8')
-    # GitHub Pages sert le site tel quel, sans passer par Jekyll.
-    (SORTIE / '.nojekyll').write_text('', encoding='utf-8')
+    _fichiers_annexes()
     print(f'\n{len(pages)} pages → {SORTIE}')
 
 

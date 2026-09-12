@@ -15,6 +15,7 @@ suit le préfixe numérique du nom de fichier, qui ne s'affiche jamais.
 Le site sort en **noindex** : il est accessible à qui a le lien, mais n'apparaît
 dans aucun moteur de recherche.
 """
+import datetime
 import html
 import pathlib
 import re
@@ -28,6 +29,34 @@ SORTIE = RACINE / 'site'
 MODELE = RACINE / 'modele'
 
 TITRE_SITE = 'Process NarratiFluent'
+
+# **Le site se rafraîchit tout seul, et il le faut.** GitHub Pages envoie
+# `cache-control: max-age=600` et ne laisse pas changer cet en-tête : le
+# navigateur garde donc chaque page dix minutes, et un rechargement normal
+# ressert la version périmée. Sur une documentation qu'on corrige plusieurs fois
+# par jour, c'est intenable — Adrien voyait ses corrections « ne rien faire ».
+#
+# Chaque page porte donc l'empreinte de sa construction et va lire `version.txt`
+# au chargement, sans cache. Si l'empreinte a changé, elle se recharge une fois.
+VERSION = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+
+RAFRAICHIR = """<script>
+(function(){
+  var ici = "__VERSION__";
+  if (sessionStorage.getItem('np-recharge') === ici) return;
+  fetch("__BASE__version.txt", {cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.text() : null; })
+    .then(function(v){
+      if (!v) return;
+      v = v.trim();
+      if (v && v !== ici) {
+        sessionStorage.setItem('np-recharge', v);
+        location.replace(location.pathname + '?v=' + v + location.hash);
+      }
+    })
+    .catch(function(){});
+})();
+</script>"""
 
 
 def _lire(chemin):
@@ -117,6 +146,7 @@ def _sommaire(pages, base, courante=None):
 def _fichiers_annexes():
     for f in MODELE.glob('*.css'):
         shutil.copy(f, SORTIE / f.name)
+    (SORTIE / 'version.txt').write_text(VERSION + '\n', encoding='utf-8')
     # `noindex` : le site est accessible à qui a le lien, invisible des moteurs.
     (SORTIE / 'robots.txt').write_text('User-agent: *\nDisallow: /\n', encoding='utf-8')
     # GitHub Pages sert le site tel quel, sans passer par Jekyll.
@@ -140,6 +170,9 @@ def construire():
         if p['brut']:
             cible.write_text(p['corps']
                              .replace('{{BASE}}', base)
+                             .replace('{{VERSION}}', VERSION)
+                             .replace('{{RAFRAICHIR}}', RAFRAICHIR.replace('__VERSION__', VERSION)
+                                      .replace('__BASE__', base))
                              .replace('{{SOMMAIRE}}', _sommaire(pages, base, p['lien'])),
                              encoding='utf-8')
             print(f'  {p["lien"]:44} {p["titre"]}  (page entière)')
@@ -148,6 +181,9 @@ def construire():
         corps = md.convert(p['corps'])
         cible.write_text(gabarit
                          .replace('{{BASE}}', base)
+                         .replace('{{VERSION}}', VERSION)
+                         .replace('{{RAFRAICHIR}}', RAFRAICHIR.replace('__VERSION__', VERSION)
+                                  .replace('__BASE__', base))
                          .replace('{{TITRE}}', html.escape(p['titre']))
                          .replace('{{TITRE_SITE}}', TITRE_SITE)
                          .replace('{{CHAPO}}', html.escape(p['chapo']))
@@ -163,6 +199,9 @@ def construire():
     if a['brut']:
         (SORTIE / 'index.html').write_text(a['corps']
             .replace('{{BASE}}', './')
+            .replace('{{VERSION}}', VERSION)
+            .replace('{{RAFRAICHIR}}', RAFRAICHIR.replace('__VERSION__', VERSION)
+                     .replace('__BASE__', './'))
             .replace('{{SOMMAIRE}}', _sommaire(pages, './', a['lien'])), encoding='utf-8')
         _fichiers_annexes()
         print(f'\n{len(pages)} pages → {SORTIE}')
@@ -170,6 +209,9 @@ def construire():
     md.reset()
     (SORTIE / 'index.html').write_text(gabarit
         .replace('{{BASE}}', './')
+        .replace('{{VERSION}}', VERSION)
+        .replace('{{RAFRAICHIR}}', RAFRAICHIR.replace('__VERSION__', VERSION)
+                 .replace('__BASE__', './'))
         .replace('{{TITRE}}', html.escape(a['titre']))
         .replace('{{TITRE_SITE}}', TITRE_SITE)
         .replace('{{CHAPO}}', html.escape(a['chapo']))

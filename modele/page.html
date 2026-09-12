@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>{{TITRE}} · {{TITRE_SITE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="{{BASE}}site.css">
+</head>
+<body>
+
+<a class="saut" href="#contenu">Aller au contenu</a>
+
+<button class="bascule" id="bascule" aria-label="Afficher le sommaire" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="page">
+
+  <nav class="rail" id="rail" aria-label="Sommaire">
+    <a class="marque" href="{{BASE}}index.html">
+      <span class="marque-nom">{{TITRE_SITE}}</span>
+      <span class="marque-sous">documentation interne</span>
+    </a>
+    {{SOMMAIRE}}
+  </nav>
+
+  <main id="contenu">
+    <article>
+      <h1>{{TITRE}}</h1>
+      <p class="chapo">{{CHAPO}}</p>
+      {{CORPS}}
+    </article>
+    <footer>
+      <p>Document interne NarratiFluent. Non référencé, non public.<br>
+      Pour corriger une procédure : la dire à Claude Code, elle est republiée dans la minute.</p>
+    </footer>
+  </main>
+
+</div>
+
+<script>
+(function(){
+  var b = document.getElementById('bascule'), r = document.getElementById('rail');
+  b.addEventListener('click', function(){
+    var ouvert = r.classList.toggle('ouvert');
+    b.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+    b.setAttribute('aria-label', ouvert ? 'Masquer le sommaire' : 'Afficher le sommaire');
+  });
+})();
+</script>
+</body>
+</html>

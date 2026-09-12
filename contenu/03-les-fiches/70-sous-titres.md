@@ -44,6 +44,54 @@ existe pour que le texte reste lisible sur un fond clair, une façade blanche ou
 
 ---
 
+## Le style des UGC d'Adrien : jaune, sans contour, ombre nette
+
+Arrêté le 12 septembre 2026 sur les Ads 136, 137 et 138, après qu'Adrien a passé en revue dix
+propositions : **« ces sous-titres font cheap »**.
+
+| | |
+|---|---|
+| Police | **Avenir Next Heavy**, corps 112 |
+| Couleur | **jaune #FFD43B** |
+| Contour | aucun |
+| Ombre | portée nette, 4 |
+| Position | 15 % du bas |
+
+**Ce qui a été écarté, et pourquoi.** Impact d'abord : c'est la police des mèmes des années 2010,
+elle se reconnaît instantanément et c'est elle qui faisait « cheap ». Puis le contour épais, qui
+produit le même effet quelle que soit la police. Puis Futura espacé — fait affiche —, le bandeau
+blanc — fait sous-titre de film —, le vert citron — fait gaming — et l'italique — fait citation.
+
+Ce qui reste marche pour une raison simple : **les publicités qui tournent sur l'Ads Library sont
+en grasse géométrique, sans contour, avec une ombre.** Arial Black, Montserrat, Poppins, Anton. Ce
+sont des polices de titrage, pas des polices de sous-titrage de film.
+
+**Attention à l'italique involontaire.** Nommer une famille sans sa graisse laisse macOS choisir, et
+il choisit parfois la variante penchée : trois des dix propositions sont sorties en italique sans
+que rien ne le demande. Le style porte donc `italique=0` explicitement, et la police se nomme en
+entier — `Avenir Next Heavy`, pas `Avenir Next`.
+
+---
+
+## Le hook se révèle mot à mot, et la ligne ne bouge pas
+
+Sur les UGC, la phrase d'accroche ne s'affiche pas d'un bloc : **chaque mot apparaît à l'instant où
+il est prononcé.** C'est la demande d'Adrien, et le minutage de Scribe la rend exacte à la syllabe.
+
+Le mot qui porte la phrase est écrit **beaucoup plus gros, en capitales, dans une seconde police** —
+Futura Condensed ExtraBold à 150 contre Avenir Next Heavy à 74. C'est le contraste qu'on voit dans
+les publicités qu'Adrien a relevées, et il vaut mieux qu'une couleur d'accent.
+
+**Le piège, et sa solution.** Révéler un mot en l'ajoutant à la ligne fait sauter tout le bloc à
+chaque mot — c'est exactement l'effet bon marché qu'on cherche à éviter. Les mots à venir sont donc
+**écrits dès le début et rendus transparents** (`{\alpha&HFF&}`) : ils réservent leur largeur, et
+le texte se remplit sans que rien ne se déplace.
+
+Le générateur ordinaire doit **sauter la fenêtre du hook** (`exclure=[(0, fin_hook)]`), sinon le
+même texte s'écrit deux fois l'un par-dessus l'autre.
+
+---
+
 ## Le contrôle avant livraison
 
 Le texte affiché doit être **le texte du script**, pas la transcription : la reconnaissance vocale

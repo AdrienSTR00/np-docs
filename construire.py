@@ -67,12 +67,91 @@ def _lire(chemin):
     if m:
         titre = m.group(1).strip()
         texte = texte[:m.start()] + texte[m.end():]
+    # **Le chapô ne se ramasse que juste sous le titre.** Une citation placée au
+    # milieu d'une fiche commence elle aussi par `>` : la chercher partout
+    # remontait un verbatim d'avatar en résumé de page, et le retirait du corps.
     chapo = ''
-    m = re.search(r'^>\s+(.+)$', texte, re.M)
+    m = re.match(r'\s*((?:>[^\n]*\n?)+)', texte)
     if m:
-        chapo = m.group(1).strip()
-        texte = texte[:m.start()] + texte[m.end():]
+        chapo = ' '.join(l.lstrip('> ').strip() for l in m.group(1).splitlines()).strip()
+        texte = texte[m.end():]
     return titre, chapo, texte.strip()
+
+
+def _resume(page, limite=135):
+    """La phrase qui accompagne une fiche sur sa carte.
+
+    Le chapô quand il existe ; sinon la première phrase du document. Aucune
+    fiche n'a donc à être annotée pour apparaître correctement dans une grille —
+    c'est ce qui permet de publier le socle tel quel, sans le dédoubler.
+    """
+    t = page['chapo']
+    if not t and not page.get('brut'):
+        m = re.search(r'^(?!#|>|\||-|\*\s|\d+\.)(.+?)(?:\n\s*\n|\Z)',
+                      page['corps'], re.S | re.M)
+        t = ' '.join(m.group(1).split()) if m else ''
+    t = re.sub(r'[*_`]', '', t)
+    t = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', t)
+    if len(t) > limite:
+        coupe = t[:limite]
+        t = coupe[:coupe.rfind(' ')] + '…' if ' ' in coupe else coupe + '…'
+    return t
+
+
+PLIER_AU_DELA = 90          # lignes : en dessous, la fiche se lit d'un trait
+PLIER_AU_DELA_SECTIONS = 5  # ou dès qu'elle a trop de chapitres pour tenir à l'écran
+
+
+def _volets(corps, plier):
+    """Chaque `##` devient un volet qu'on ouvre et qu'on referme.
+
+    **Une procédure longue ne se lit pas d'un bloc.** Adrien : « des fois les
+    procédures sont longues donc il faut pouvoir les plier, déplier si on veut ».
+    Le découpage suit les titres de niveau 2, qui sont déjà les chapitres du
+    document — rien à baliser dans le markdown, les fiches restent du texte
+    ordinaire, lisible sans le site.
+
+    Sur une fiche courte, `plier` est faux : tout reste ouvert, et l'affichage
+    ne change pas. Sur une fiche longue, seul le premier chapitre s'ouvre.
+    """
+    morceaux = re.split(r'(?=<h2[ >])', corps)
+    if len(morceaux) < 2:
+        return corps, False
+    out = [morceaux[0]]
+    for i, bloc in enumerate(morceaux[1:]):
+        m = re.match(r'<h2([^>]*)>(.*?)</h2>(.*)', bloc, re.S)
+        if not m:
+            out.append(bloc)
+            continue
+        attrs, titre, reste = m.groups()
+        ouvert = '' if (plier and i) else ' open'
+        out.append(
+            f'<details class="volet"{attrs}{ouvert}>'
+            f'<summary><span class="volet-titre">{titre}</span></summary>'
+            f'<div class="volet-corps">{reste}</div></details>')
+    barre = ('<div class="volets-barre">'
+             '<button type="button" class="volets-tout" data-volets>'
+             f'{"Tout déplier" if plier else "Tout replier"}</button></div>')
+    return barre + ''.join(out), True
+
+
+def _cartes(pages, dossier, base):
+    """La grille de fiches cliquables d'une section.
+
+    C'est ce qu'Adrien appelle « le côté Notion » : une section n'est pas une
+    liste de liens dans une barre latérale, c'est un jeu de fiches qu'on voit
+    d'un coup d'œil, avec leur titre et ce qu'elles contiennent.
+    """
+    out = ['<div class="cartes">']
+    for p in pages:
+        if p['section'] != dossier:
+            continue
+        out.append(
+            f'<a class="carte" href="{base}{p["lien"]}">'
+            f'<span class="carte-titre">{html.escape(p["titre"])}</span>'
+            f'<span class="carte-chapo">{html.escape(_resume(p))}</span></a>')
+    out.append('</div>')
+    return ''.join(out)
 
 
 def _section(chemin):
@@ -102,7 +181,11 @@ def _pages():
             texte = f.read_text(encoding='utf-8')
             m = re.search(r'<title>(.*?)</title>', texte, re.S)
             titre = (m.group(1).strip() if m else f.stem)
-            pages.append({'fichier': f, 'titre': titre, 'chapo': '', 'corps': texte,
+            # Une page entière n'a pas de chapô markdown : elle le déclare en
+            # `<meta name="resume">`, faute de quoi sa carte n'aurait qu'un titre.
+            r = re.search(r'<meta name="resume" content="(.*?)"', texte, re.S)
+            pages.append({'fichier': f, 'titre': titre,
+                          'chapo': html.unescape(r.group(1).strip()) if r else '', 'corps': texte,
                           'lien': _lien(f), 'section': _section(f), 'brut': True})
             continue
         titre, chapo, corps = _lire(f)
@@ -125,8 +208,10 @@ def _base(page):
 
 def _sommaire(pages, base, courante=None):
     """Le sommaire, groupé par section, dans l'ordre des noms de fichiers."""
+    # La page d'accueil n'est pas listée : le titre en haut du rail y mène déjà,
+    # et la voir deux fois ferait douter qu'il s'agit de la même.
     sections, ordre = {}, []
-    for p in pages:
+    for p in pages[1:]:
         s = p['section'] or 'Général'
         if s not in sections:
             sections[s] = []
@@ -134,8 +219,10 @@ def _sommaire(pages, base, courante=None):
         sections[s].append(p)
     out = []
     for s in ordre:
+        racine = (s == 'Général')
         nom = html.escape(re.sub(r'^\d+[-_]', '', s).replace('-', ' ').capitalize())
-        out.append(f'<div class="groupe"><span class="groupe-nom">{nom}</span><ul>')
+        out.append('<div class="groupe groupe-racine"><ul>' if racine else
+                   f'<div class="groupe"><span class="groupe-nom">{nom}</span><ul>')
         for p in sections[s]:
             actif = ' class="actif"' if courante and p['lien'] == courante else ''
             out.append(f'<li><a href="{base}{p["lien"]}"{actif}>{html.escape(p["titre"])}</a></li>')
@@ -179,6 +266,11 @@ def construire():
             continue
         md.reset()
         corps = md.convert(p['corps'])
+        corps = re.sub(r'\{\{CARTES:([^}]+)\}\}',
+                       lambda m: _cartes(pages, m.group(1), base), corps)
+        lignes = p['corps'].count(chr(10))
+        corps, _ = _volets(corps, lignes > PLIER_AU_DELA
+                           or corps.count('<h2') > PLIER_AU_DELA_SECTIONS)
         cible.write_text(gabarit
                          .replace('{{BASE}}', base)
                          .replace('{{VERSION}}', VERSION)
@@ -207,6 +299,8 @@ def construire():
         print(f'\n{len(pages)} pages → {SORTIE}')
         return
     md.reset()
+    accueil = re.sub(r'\{\{CARTES:([^}]+)\}\}',
+                     lambda m: _cartes(pages, m.group(1), './'), md.convert(a['corps']))
     (SORTIE / 'index.html').write_text(gabarit
         .replace('{{BASE}}', './')
         .replace('{{VERSION}}', VERSION)
@@ -216,7 +310,7 @@ def construire():
         .replace('{{TITRE_SITE}}', TITRE_SITE)
         .replace('{{CHAPO}}', html.escape(a['chapo']))
         .replace('{{SOMMAIRE}}', _sommaire(pages, './', a['lien']))
-        .replace('{{CORPS}}', md.convert(a['corps'])), encoding='utf-8')
+        .replace('{{CORPS}}', accueil), encoding='utf-8')
 
     _fichiers_annexes()
     print(f'\n{len(pages)} pages → {SORTIE}')

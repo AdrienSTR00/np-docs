@@ -151,3 +151,54 @@ footer{
 footer p{color:inherit;margin:0;max-width:none}
 
 @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto}}
+
+/* ---------- volets : un chapitre qu'on ouvre et qu'on referme ---------- */
+.volets-barre{display:flex;justify-content:flex-end;margin:26px 0 -8px}
+.volets-tout{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--encre-3); background:none; border:1px solid var(--trait); border-radius:2px;
+  padding:5px 11px; cursor:pointer;
+}
+.volets-tout:hover{color:var(--encre);border-color:var(--encre-3)}
+.volets-tout:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+.volet{border-top:1px solid var(--trait);margin:0}
+.volet>summary{
+  font-family:var(--grot); font-weight:700; font-size:23px; letter-spacing:-.012em;
+  line-height:1.25; text-wrap:balance; cursor:pointer; list-style:none;
+  padding:22px 30px 14px 0; position:relative; color:var(--encre);
+}
+.volet>summary::-webkit-details-marker{display:none}
+.volet>summary:hover{color:var(--petrole)}
+.volet>summary:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+/* Le chevron dit l'état, et il est seul à le dire : pas de fond, pas de bordure. */
+.volet>summary::after{
+  content:""; position:absolute; right:4px; top:33px; width:9px; height:9px;
+  border-right:2px solid var(--encre-3); border-bottom:2px solid var(--encre-3);
+  transform:rotate(45deg); transition:transform .16s ease;
+}
+.volet[open]>summary::after{transform:rotate(-135deg);border-color:var(--orange)}
+.volet-corps{padding-bottom:10px}
+.volet-corps>:first-child{margin-top:6px}
+.volet-corps h3{margin-top:22px}
+.volet+.volet{margin-top:0}
+
+/* ---------- fiches : la grille cliquable d'une section ---------- */
+.cartes{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(248px,1fr));
+  gap:12px; margin:22px 0 34px;
+}
+.carte{
+  display:flex; flex-direction:column; gap:6px; text-decoration:none;
+  background:var(--surface); border:1px solid var(--trait); border-radius:3px;
+  padding:15px 16px 16px; border-left:2px solid var(--trait);
+  transition:border-color .14s ease, transform .14s ease;
+}
+.carte:hover{border-color:var(--encre-3);border-left-color:var(--orange);transform:translateY(-1px)}
+.carte:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.carte-titre{
+  font-family:var(--grot); font-weight:600; font-size:14.5px; line-height:1.3;
+  color:var(--encre); letter-spacing:-.005em;
+}
+.carte-chapo{font-size:13.5px;line-height:1.5;color:var(--encre-3)}
+.carte-chapo:empty{display:none}

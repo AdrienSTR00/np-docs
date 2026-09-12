@@ -50,6 +50,38 @@
     b.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
     b.setAttribute('aria-label', ouvert ? 'Masquer le sommaire' : 'Afficher le sommaire');
   });
+
+  // **Un bouton qui ouvre et referme tout d'un coup.** Sur une procédure
+  // découpée en douze chapitres, cliquer douze fois n'est pas une option ; et
+  // l'état du bouton se déduit de ce qui est ouvert, jamais d'un compteur
+  // interne qui finirait par mentir.
+  var tout = document.querySelector('[data-volets]');
+  if (tout) {
+    var volets = [].slice.call(document.querySelectorAll('details.volet'));
+    var etiquette = function(){
+      var fermes = volets.filter(function(d){ return !d.open; }).length;
+      tout.textContent = fermes ? 'Tout déplier' : 'Tout replier';
+    };
+    tout.addEventListener('click', function(){
+      var ouvrir = volets.some(function(d){ return !d.open; });
+      volets.forEach(function(d){ d.open = ouvrir; });
+      etiquette();
+    });
+    volets.forEach(function(d){ d.addEventListener('toggle', etiquette); });
+    etiquette();
+  }
+
+  // Un lien d'ancre vers un chapitre replié doit l'ouvrir, sinon il mène au vide.
+  var ancre = function(){
+    if (!location.hash) return;
+    var c = document.querySelector(location.hash);
+    while (c) {
+      if (c.tagName === 'DETAILS') c.open = true;
+      c = c.parentElement;
+    }
+  };
+  window.addEventListener('hashchange', ancre);
+  ancre();
 })();
 </script>
 {{RAFRAICHIR}}

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>La chaîne de production</title>
+<meta name="resume" content="Les treize étapes qui mènent d'une ligne du tableau aux trois fichiers livrés, dépliables une à une, avec les pannes déjà rencontrées.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -300,16 +301,35 @@ footer{
 <div class="ligne" id="ligne">
 
   <section class="etape" data-genre="etape" data-formats="tous">
+    <div class="numero">0</div>
+    <button class="tete" aria-expanded="false"><span class="titre-etape">La conception</span><span class="sous">Meta · Suivi Crea</span></button>
+    <div class="corps" hidden>
+      <div class="pas">
+        <div class="r"><span class="ref">0a</span><span class="qui a">Adrien</span><p class="quoi">Ouvre le compte publicitaire sur le mois écoulé et repère les <strong>winneuses</strong> — les créas qui dépensent entre 10 et 25 % du budget de la campagne. Claude ne voit pas le compte : il ne peut pas savoir ce qu'il faut refaire.</p></div>
+        <div class="r"><span class="ref">0b</span><span class="qui a">Adrien</span><p class="quoi">Les colore en <strong>violet</strong> dans le Suivi Crea et y reporte leur CPA total.</p></div>
+        <div class="r"><span class="ref">0c</span><span class="qui a">Adrien</span><p class="quoi">Étudie les patterns : quels formats reviennent, à quels avatars on vend le plus, quels angles et quels hooks tiennent. <strong>C'est cette analyse qui décide de toutes les publicités du mois.</strong></p></div>
+        <div class="r"><span class="ref">0d</span><span class="qui a">Adrien</span><p class="quoi">Conçoit les variations : pour chaque winneuse, des déclinaisons qui ne changent <strong>qu'un seul élément</strong> — le format, l'angle et son hook, ou l'avatar. Plus une créa est winneuse, plus on en tire de variations. 20 % de hooks réellement neufs au maximum.</p></div>
+        <div class="r"><span class="ref">0e</span><span class="qui a">Adrien</span><p class="quoi">Remplit les lignes neuves — <em>Itération de</em>, <em>Format</em>, <em>Angle (Hook)</em>, <em>Avatar</em> —, étale les dates de lancement sur quatre semaines à partir du 10, et les colore en <strong>jaune</strong>. <a href="../conception/la-routine-mensuelle.html">La routine complète →</a></p></div>
+      </div>
+      <div class="valid"><span class="los"></span><p><strong>C'est un travail de stratégie, et il n'est pas délégué.</strong> Tant que le tableau n'est pas rempli, il n'y a rien à écrire et rien à produire.</p></div>
+      <div class="note"><span class="etiq">Panne connue</span><p>Une variation qui change deux éléments à la fois n'apprend rien : quand elle perd, on ne sait pas lequel des deux l'a fait perdre. Un élément, un test.</p></div>
+    </div>
+  </section>
+
+  <section class="etape" data-genre="etape" data-formats="tous">
     <div class="numero">1</div>
     <button class="tete" aria-expanded="false"><span class="titre-etape">Le brief</span><span class="sous">Suivi Crea</span></button>
     <div class="corps" hidden>
       <div class="pas">
         <div class="r"><span class="ref">1a</span><span class="qui a">Adrien</span><p class="quoi">Dit quelles publicités lancer — « on part sur les 130 à 139 » — ou remplit lui-même les lignes du Suivi Crea.</p></div>
         <div class="r"><span class="ref">1b</span><span class="qui c">Claude</span><p class="quoi">Lit la ligne dans le classeur et relève les quatre dimensions : <strong>format, angle, hook, avatar</strong>.<span class="cmd">python3 .claude/skills/rediger-ads/scripts/lire_suivi.py --ad 133</span></p></div>
-        <div class="r"><span class="ref">1c</span><span class="qui c">Claude</span><p class="quoi">Déduit la VSL de <strong>l'onglet</strong> où se trouve la ligne — et donc la personne grammaticale et les mots interdits. Funnel 1 : Adrien, vouvoiement. Funnel 2 : Céline, tutoiement. Funnel 3 : Adrien Santoro, vouvoiement. Ça ne se demande pas, ça se lit.</p></div>
+        <div class="r"><span class="ref">1c</span><span class="qui c">Claude</span><p class="quoi">Lit la VSL dans <strong>l'onglet</strong> où se trouve la ligne — et avec elle la personne grammaticale et les mots interdits. Funnel 1 : Adrien, vouvoiement. Funnel 2 : Céline, tutoiement. Funnel 3 : Adrien Santoro, vouvoiement.</p></div>
+        <div class="r"><span class="ref">1c′</span><span class="qui a">Adrien</span><p class="quoi">Dit à quelle VSL correspond le lot <strong>dès que l'onglet ne le porte pas</strong> — un lot dicté à la voix, un lot mixte, une ligne posée dans le mauvais onglet. <strong>Claude ne devine jamais une VSL.</strong> Le bon script à la mauvaise adresse est un lot entier à refaire.</p></div>
         <div class="r"><span class="ref">1d</span><span class="qui c">Claude</span><p class="quoi">Lit le <strong>statut</strong>, qui n'est écrit nulle part : il est porté par la couleur de fond de la cellule. La légende est relue dans le classeur à chaque appel, jamais recopiée dans le code.</p></div>
         <div class="r"><span class="ref">1e</span><span class="qui c">Claude</span><p class="quoi">Relève la <strong>technologie de production</strong>, entre parenthèses dans la colonne Format : <em>UGC AI femme 50 ans (Argil)</em>, <em>Interview podcast (tournage réel)</em>. C'est elle qui décide de la branche à l'étape 5.</p></div>
+        <div class="r"><span class="ref">1f</span><span class="qui c">Claude</span><p class="quoi">Pose <strong>en un seul lot</strong> tout ce que le tableau n'a pas répondu : la VSL, les avatars manquants, la technologie quand elle n'est pas écrite, les rushes ou voix fournis, un casting validé à rejouer, le registre (P) ou (S). Puis il produit sans réinterrompre. <a href="../conception/le-brief-a-claude.html">Le détail des questions →</a></p></div>
       </div>
+      <div class="valid"><span class="los"></span><p><strong>Adrien répond au lot de questions.</strong> Une seule fois, avant la première ligne écrite — pas au fil de l'eau.</p></div>
       <div class="note"><span class="etiq">Panne connue</span><p>La colonne Format porte aussi la technologie entre parenthèses. Écrire « tournage réel » plutôt que de laisser vide — une absence d'information ne doit jamais vouloir dire quelque chose.</p></div>
     </div>
   </section>

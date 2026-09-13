@@ -241,3 +241,70 @@ artistique et les musiques.** La section est confuse et doit être refaite.
 - **Renuméroter** les sous-étapes de validation en **4a, 4b, 4c**.
 - Préciser partout que **tout se fait par lot** : on rédige tout d'un coup, on
   produit tout d'un coup.
+
+---
+
+# Troisième passe — 13 septembre, soir
+
+## Fiche « Ads : conception mensuelle »
+
+- § 4 — préciser que les nouveautés portent **surtout sur les hooks**, et qu'Adrien
+  peut guider la recherche sans arriver avec une idée finie.
+
+## Chaîne — étape 3, le casting
+
+- Le bloc de validation « Adrien tranche sur les quatre, en une fois » est trop
+  vague. **L'écrire noir sur blanc, en puces, et pour chaque ads** : à cet instant
+  Adrien dit — un numéro de visage par personnage, un numéro de voix par
+  personnage, la direction artistique, la musique.
+- **Ajouter au casting le type de sous-titre et le type d'appel à l'action** : ça
+  relève de la direction artistique et ça se valide ici, pas au montage.
+- L'exemple du e muet sort du bloc de validation et devient une **panne connue
+  intitulée « Erreurs de casting connues »**, qu'on **cumule au fil des lots**.
+- Fiche « Les castings validés » → renommer **« REX casting validé (personnages et
+  voix réutilisables) »**. **À mettre à jour à chaque batch** — c'est un retour
+  d'expérience, pas une page figée.
+
+## Chaîne — étape 4 et sa validation
+
+- **Supprimer entièrement** la phrase de comparaison des coûts sur la validation de
+  la maquette.
+- Ajouter aux réponses possibles d'Adrien : **il manque un bruitage ou une musique,
+  ou ce n'est pas la bonne**.
+- Ajouter le cas du **défaut de voix** : si la voix retenue ne va finalement pas,
+  Claude repropose **une planche de cinq pour cette ads-là uniquement**.
+- Dernière sous-étape : la formuler **par ads**, avec un exemple — *« Ads 138,
+  ok »* — et dire qu'à partir de cet instant la bande son de cette ads est gelée.
+
+## Chaîne — étape 5, l'image
+
+- La phrase d'introduction sur la ramification lui convient : c'est de la
+  production, elle reste.
+- **Les planches de visages ne se refont pas ici** : elles ont été montrées et
+  tranchées au casting. L'étape 5 s'appuie sur le casting validé au lieu de
+  reproposer trente à quarante visages.
+- **Le tournage réel n'a ni casting de voix ni planche de visages.** La ramification
+  doit le dire : Adrien ou Céline tournent, le montage des rushes se fait à la main
+  parce que c'est plus rapide que de le faire faire, puis Claude reprend à la
+  maquette audio — musique, bruitages —, aux sous-titres et à l'appel à l'action.
+- Panne connue « toute personne castée ressemble à l'audience visée » → ajouter
+  **« sauf indication contraire d'Adrien au casting »**.
+- Ajouter un contrôle : **les sous-titres sont synchronisés avec la voix.**
+
+## Chaîne — validations
+
+- **V5, les rendus bruts** — dire précisément ce qui part : **tout ce qui est généré
+  par IA** (UGC IA, B-rolls, animations). Le tournage réel n'y passe pas.
+- **V6b « Adrien tranche en une fois »** — dire **sur quoi** il tranche.
+- **Panne connue de la planche** — ajouter l'erreur classique : **le format carré
+  trop serré sur le visage** d'un UGC.
+- **Avant le montage, poser les questions de direction artistique** : zooms, plans
+  plus ou moins serrés, perspectives pour habiller les coupes. Adrien peut répondre
+  pour tout un lot d'un coup.
+
+## Chaîne — contrôles et livraison
+
+- Contrôles : vérifier que le fichier porte **la bonne maquette sonore** — voix,
+  musiques et bruitages compris.
+- **Dire partout que tout se fait simultanément sur toutes les ads du lot.**
+- « On livre au moment de la validation, pas plus tard » : il valide.

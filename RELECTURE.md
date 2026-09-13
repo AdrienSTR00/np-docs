@@ -308,3 +308,31 @@ artistique et les musiques.** La section est confuse et doit être refaite.
   musiques et bruitages compris.
 - **Dire partout que tout se fait simultanément sur toutes les ads du lot.**
 - « On livre au moment de la validation, pas plus tard » : il valide.
+
+---
+
+# À faire quand les domaines seront arrivés chez OVH
+
+**Poser une vraie adresse sur le site** — `process.narratifluent.com` — au lieu de
+`adrienstr00.github.io/np-docs`. Trois gestes, dans cet ordre :
+
+1. Attendre que le transfert des domaines soit terminé et que la zone OVH soit
+   construite et vérifiée.
+2. Ajouter un `CNAME` du sous-domaine vers `adrienstr00.github.io`, poser le
+   fichier `CNAME` à la racine du site, et activer HTTPS côté GitHub Pages.
+3. Vérifier que le certificat est émis avant d'annoncer l'adresse.
+
+Le site reste en `noindex` : une vraie adresse ne le rend pas public, elle le rend
+mémorisable.
+
+---
+
+# Ce qui reste à vérifier à la prochaine production
+
+Adrien testera le process sur son prochain lot d'ads et corrigera ce qui coince.
+Les points que je n'ai pas pu valider seul :
+
+- les deux exemples en italique du § 3 de la fiche « Ads : conception mensuelle » ;
+- l'étape 2g, réécrite parce qu'il ne l'avait pas comprise ;
+- la mention « tant qu'elle n'a pas sa propre colonne » en 1b, à retirer quand la
+  colonne **Technologie** existera dans le classeur.

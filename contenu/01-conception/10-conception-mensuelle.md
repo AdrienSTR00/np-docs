@@ -64,9 +64,14 @@ sur **10 à 30 % des créas du mois**. Le reste itère sur du prouvé.
 C'est ici que ça se passe, et nulle part ailleurs : au moment où on écrit les scripts,
 l'angle et le hook sont déjà arrêtés.
 
+**Ce sont surtout des hooks.** Un format neuf ou un avatar neuf arrivent de temps en
+temps ; le hook, lui, est ce qu'on renouvelle le plus souvent, parce que c'est lui
+qui s'use le plus vite.
+
 1. **Adrien dit ce qu'il cherche** — un format qu'il veut tester, une direction, une
    audience qu'il trouve mal servie, une publicité repérée ailleurs. Il n'a pas
-   besoin d'arriver avec une idée finie.
+   besoin d'arriver avec une idée finie : il peut simplement orienter, et affiner
+   sur ce que Claude lui rapporte.
 2. **Claude en propose un grand nombre**, pas deux ou trois : des formats, des
    angles, des hooks, des avatars, avec pour chacun ce qu'il vise et sur quel avatar
    il tient.

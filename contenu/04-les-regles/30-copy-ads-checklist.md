@@ -1,4 +1,4 @@
-# Copy Ads Checklist
+# Copy Checklist
 
 **Le contrôle qualité appliqué à chaque script, automatiquement, avant qu'Adrien le voie.**
 

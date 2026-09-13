@@ -289,7 +289,7 @@ footer{
 <header>
   <p class="kicker">NarratiFluent · funnels 1 à 3 · révision du 12 septembre 2026</p>
   <h1>La chaîne de production, étape par étape</h1>
-  <p class="chapo">Le trajet complet d'une publicité, du brief au Drive. Les <strong>losanges orange</strong> sont les points où rien n'avance sans la validation d'Adrien. Les <strong>traits rouges</strong> sont des pannes déjà survenues — chacune a coûté du temps, et chacune a son garde-fou en bas de page.</p>
+  <p class="chapo"><strong>Tout se fait par lot.</strong> On rédige tous les scripts du mois d'un coup, on produit toutes les bandes son d'un coup, on monte tout d'un coup — chaque étape ci-dessous s'applique à l'ensemble des ads du batch, jamais à une seule. Le trajet complet d'une publicité, du brief au Drive. Les <strong>losanges orange</strong> sont les points où rien n'avance sans la validation d'Adrien. Les <strong>traits rouges</strong> sont des pannes déjà survenues — chacune a coûté du temps, et chacune a son garde-fou en bas de page.</p>
 </header>
 
 <div class="filtres">
@@ -373,11 +373,28 @@ footer{
         <div class="r"><span class="ref">3c</span><span class="qui c">Claude</span><p class="quoi"><strong>Les voix.</strong> <strong>Cinq candidates par personnage</strong>, enchaînées dans un seul fichier, <strong>sur les phrases du script</strong> et non sur un texte neutre, <strong>au débit réel</strong> de la publicité, accélération comprise. On puise d'abord dans le stock — <em>Jacques</em> pour l'homme de 70 ans, <em>Laurent</em> pour celui de 60, <em>Paul</em> pour le narrateur documentaire — et on clone au besoin selon le contexte de l'ads.<span class="cmd">04-PRODUCTION/catalogue-voix.json</span></p></div>
         <div class="r"><span class="ref">3d</span><span class="qui c">Claude</span><p class="quoi"><strong>La direction artistique.</strong> Sur les formats animés ou techniques, une <strong>planche d'images</strong> part avant toute génération — c'est ce qui a été fait sur l'Ads 133. On y voit le traitement, la lumière, la matière, avant qu'une seconde de vidéo soit payée.</p></div>
         <div class="r"><span class="ref">3e</span><span class="qui c">Claude</span><p class="quoi"><strong>Les musiques.</strong> Elles font partie du casting : parfois aucune, parfois une par ads. Claude propose des extraits enchaînés et annoncés, ou demande le registre voulu — documentaire, motivation, aventure, lo-fi.</p></div>
-        <div class="r"><span class="ref">3f</span><span class="qui c">Claude</span><p class="quoi">Écrit <code>casting.json</code>. <strong>Tout ce qui décide vit là</strong> : les voix par rôle, la stabilité, la longueur des silences, la vitesse, la musique et son gain, le souffle, le type d'écran de fin, les corrections de texte dit. Les scripts ne font qu'exécuter — une correction devient une ligne de données, pas une ligne de code.</p></div>
+        <div class="r"><span class="ref">3f</span><span class="qui c">Claude</span><p class="quoi"><strong>Le sous-titre et l'appel à l'action.</strong> Le style de sous-titre — police, couleur, position, traitement du hook — et le type d'appel à l'action se choisissent ici, avec le reste de la direction artistique. Les décider au montage oblige à tout réencoder.</p></div>
+        <div class="r"><span class="ref">3g</span><span class="qui c">Claude</span><p class="quoi">Écrit <code>casting.json</code>. <strong>Tout ce qui décide vit là</strong> : les voix par rôle, la stabilité, la longueur des silences, la vitesse, la musique et son gain, le souffle, le type d'écran de fin, les corrections de texte dit. Les scripts ne font qu'exécuter — une correction devient une ligne de données, pas une ligne de code.</p></div>
       </div>
-      <div class="valid"><span class="los"></span><p><strong>Adrien tranche sur les quatre, en une fois.</strong> Il donne un numéro par personnage. Son critère sur les voix : est-ce que ça sonne IA. Une voix qui prononce le e muet en fin de mot — « trois secondeuh » — est éliminée quels que soient son âge et son timbre.</p></div>
-      <div class="note"><span class="etiq">Choix</span><p><strong>Un casting validé se rejoue.</strong> On ne recaste que si le script demande un personnage que le stock ne contient pas — ça évite à Adrien une planche de cinq voix à écouter pour rien. <a href="../les-fiches/castings-valides.html">Voir la fiche « Les castings validés » →</a></p></div>
-      <div class="note"><span class="etiq">Panne connue</span><p>Une correction de prononciation écrite dans le texte joué — « hipo-campe » — peut dépasser dans la bande son. Elle se corrige dans <code>casting.json</code>, pas dans le script.</p></div>
+      <div class="valid"><span class="los"></span><p><strong>Adrien tranche, en une fois, et pour chaque ads du lot.</strong> À cet instant il dit :</p>
+        <ul class="questions">
+          <li>le <strong>numéro de visage</strong> retenu, personnage par personnage ;</li>
+          <li>le <strong>numéro de voix</strong> retenu, personnage par personnage ;</li>
+          <li>la <strong>direction artistique</strong> — et la planche d'images sur les formats animés ;</li>
+          <li>la <strong>musique</strong>, ou l'absence de musique ;</li>
+          <li>le <strong>style de sous-titre</strong> et le <strong>type d'appel à l'action</strong>.</li>
+        </ul>
+      </div>
+      <div class="note"><span class="etiq">Choix</span><p><strong>Un casting validé se rejoue.</strong> On ne recaste que si le script demande un personnage que le stock ne contient pas — ça évite à Adrien une planche de cinq voix à écouter pour rien. <a href="../les-fiches/rex-casting-valide.html">Voir le REX casting validé →</a></p></div>
+      <div class="note"><span class="etiq">Erreurs de casting connues</span><p>La liste se complète à chaque lot — c'est un retour d'expérience, pas une théorie.</p>
+        <ul class="questions">
+          <li><strong>Le e muet en fin de mot.</strong> Une voix qui dit « trois secondeuh » ou « les experts diseuh » est éliminée quels que soient son âge et son timbre.</li>
+          <li><strong>Une voix trop lisse.</strong> Sans hésitation ni reprise, elle s'entend comme une machine — même quand le timbre est juste.</li>
+          <li><strong>Une photo source où le personnage sourit.</strong> Le rendu paraît faux ; un visage neutre tient beaucoup mieux.</li>
+          <li><strong>Un portrait détouré posé sur un fond.</strong> Toujours refusé. La personne doit avoir été photographiée là où elle est.</li>
+          <li><strong>Une correction de prononciation écrite dans le texte joué</strong> — « hipo-campe » — peut dépasser dans la bande son. Elle se corrige dans <code>casting.json</code>, pas dans le script.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -404,13 +421,13 @@ python3 04-PRODUCTION/scripts/verifier_voix.py 04-PRODUCTION/medias/ADS-133/band
     <div class="numero"></div>
     <button class="tete" aria-expanded="false"><span class="titre-etape">Validation — la maquette audio</span><span class="sous">Adrien</span></button>
     <div class="corps" hidden>
-      <p>C'est le point de contrôle <strong>le moins cher de toute la chaîne</strong> : quelques milliers de caractères ElevenLabs, contre une centaine de crédits d'avatar ou dix minutes de rendu par format.</p>
+      <p><strong>Tout le lot passe en une fois</strong> : Adrien écoute les maquettes de toutes les ads du batch, pas une par une.</p>
       <div class="pas">
-        <div class="r"><span class="ref">V4a</span><span class="qui a">Adrien</span><p class="quoi">Écoute et répond. Trois réponses possibles : <strong>« ok »</strong>, un <strong>facteur de vitesse</strong> — « applique un ×1,2 » —, ou un <strong>défaut nommé</strong> : trop lisse, trop lent, haché, des « euh » en fin de mot.</p></div>
+        <div class="r"><span class="ref">V4a</span><span class="qui a">Adrien</span><p class="quoi">Écoute et répond, pour chaque ads. Les réponses possibles : <strong>« ok »</strong>, un <strong>facteur de vitesse</strong> — « applique un ×1,2 » —, un <strong>défaut nommé</strong> — trop lisse, trop lent, haché, des « euh » en fin de mot — ou <strong>un manque</strong> : un bruitage absent, pas de musique là où il en fallait, ou la mauvaise.</p></div>
         <div class="r"><span class="ref">V4b</span><span class="qui c">Claude</span><p class="quoi">Si c'est un facteur : il s'applique <strong>à la version qu'il vient d'écouter</strong> et se <strong>cumule</strong> avec ce qui existe déjà. Une maquette à ×1,15 qui reçoit un ×1,2 se règle à ×1,38, jamais à ×1,2.</p></div>
         <div class="r"><span class="ref">V4c</span><span class="qui c">Claude</span><p class="quoi">Compare la durée et le débit à la version précédente, et vérifie que <strong>le sens de la variation correspond</strong>. Une demande d'accélération qui produit un fichier plus long est une erreur d'interprétation, pas un choix.</p></div>
         <div class="r"><span class="ref">V4d</span><span class="qui c">Claude</span><p class="quoi">Si c'est un défaut de voix : on ne règle pas, <strong>on recaste</strong>. Une nouvelle planche de cinq, pas un réglage de plus sur la même voix.</p></div>
-        <div class="r"><span class="ref">V4e</span><span class="qui a">Adrien</span><p class="quoi">Dit « ok ». <strong>À partir de cet instant la bande son est gelée.</strong></p></div>
+        <div class="r"><span class="ref">V4e</span><span class="qui a">Adrien</span><p class="quoi">Dit « ok », <strong>ads par ads</strong> — « Ads 138, ok ». À partir de cet instant la bande son de cette ads est gelée : elle ne se régénère plus, et toute correction qui obligerait à la refaire devient une nouvelle maquette à revalider.<strong>À partir de cet instant la bande son est gelée.</strong></p></div>
       </div>
       <div class="note"><span class="etiq">Panne connue — la plus coûteuse</span><p><strong>Une correction qui oblige à régénérer une prise validée n'est pas une correction, c'est une nouvelle maquette.</strong> Deux générations du même clone ne rendent pas le même timbre, et Adrien l'entend immédiatement. Elle repasse donc par lui avant d'entrer en montage — même quand la correction vient de lui.</p></div>
       <div class="note"><span class="etiq">Panne connue</span><p>Poser une musique oblige à réassembler la piste. Vérifier après coup que la voix validée n'a pas bougé : même longueur au sample près, écart mesuré sous −60 dB.</p></div>
@@ -421,14 +438,14 @@ python3 04-PRODUCTION/scripts/verifier_voix.py 04-PRODUCTION/medias/ADS-133/band
     <div class="numero">5</div>
     <button class="tete" aria-expanded="false"><span class="titre-etape">L'image — les six branches</span><span class="sous">selon le format</span></button>
     <div class="corps" hidden>
-      <p>C'est ici que la chaîne se ramifie. Le reste du trajet est commun, mais cette étape change entièrement d'outil, de coût et de pièges selon le format lu à l'étape 1e.</p>
+      <p>C'est ici que la chaîne se ramifie. Le reste du trajet est commun, mais cette étape change entièrement d'outil, de coût et de pièges selon le format et la technologie relevés à l'étape 1b. <strong>Elle s'appuie sur le casting déjà tranché à l'étape 3</strong> : ni visage ni voix ne se rechoisissent ici.</p>
       <div class="pas">
         <div class="r"><span class="ref">5a</span><span class="qui c">Claude</span><p class="quoi"><strong>Chiffre avant de dépenser.</strong> Le coût se calcule à partir de la timeline, avant la moindre génération, et se communique quand il change d'ordre de grandeur.<span class="cmd">python3 04-PRODUCTION/scripts/cout_argil.py</span></p></div>
-        <div class="r"><span class="ref">5b</span><span class="qui c">Claude</span><p class="quoi">Prépare la matière de la branche : photo source pour un avatar, planche de visages pour un casting, requêtes de recherche pour des plans de banque, descriptions pour un générateur.</p></div>
+        <div class="r"><span class="ref">5b</span><span class="qui c">Claude</span><p class="quoi">Prépare la matière de la branche à partir du casting validé : la <strong>photo source du visage retenu</strong>, les requêtes de recherche pour les plans de banque, les descriptions pour un générateur.</p></div>
         <div class="r"><span class="ref">5c</span><span class="qui c">Claude</span><p class="quoi">Sur les formats à personnage : monte une <strong>planche de 30 à 40 visages</strong> numérotés, tous conformes à l'audience visée — français, blancs, dans la tranche d'âge de l'avatar.</p></div>
         <div class="r"><span class="ref">5d</span><span class="qui a">Adrien</span><p class="quoi">Donne un numéro de visage.</p></div>
         <div class="r"><span class="ref">5e</span><span class="qui c">Claude</span><p class="quoi">Lance les rendus. <strong>La voix part à sa vitesse naturelle</strong>, jamais accélérée : le modèle ne synchronise pas des lèvres sur un débit de 245 mots/minute. L'accélération s'applique à l'image, au montage, du même facteur.</p></div>
-        <div class="r"><span class="ref">5f</span><span class="qui c">Claude</span><p class="quoi">Vérifie chaque plan de banque à la <strong>détection de visage</strong> avant de le retenir, et écarte tout ce qui dépasse 5 % du cadre.</p></div>
+        <div class="r"><span class="ref">5e</span><span class="qui c">Claude</span><p class="quoi">Vérifie chaque plan de banque à la <strong>détection de visage</strong> avant de le retenir, et écarte tout ce qui dépasse 5 % du cadre.</p></div>
       </div>
       <div class="branches">
         <div class="branche" data-formats="ugc"><h4><span class="fil"></span>UGC IA</h4><p>Un seul personnage face caméra de bout en bout. Une photo source, un rendu, découpé ensuite en autant de plans que de répliques.</p><span class="outil">Argil · HeyGen · monter_ugc.py</span></div>
@@ -448,7 +465,7 @@ python3 04-PRODUCTION/scripts/verifier_voix.py 04-PRODUCTION/medias/ADS-133/band
     <div class="numero"></div>
     <button class="tete" aria-expanded="false"><span class="titre-etape">Validation — les rendus bruts</span><span class="sous">Adrien</span></button>
     <div class="corps" hidden>
-      <p>Le principe n'est pas la durée de l'étape mais <strong>ce qu'elle coûterait à refaire</strong>. Un rendu d'avatar raté découvert après le montage, c'est le montage refait en plus du rendu.</p>
+      <p><strong>Tout ce qui a été généré par une IA passe devant Adrien avant le montage</strong> — rendus d'avatar, plans d'animation, plans de banque retenus. Un tournage réel n'y passe pas : il a déjà été vu au rush. Le principe n'est pas la durée de l'étape mais <strong>ce qu'elle coûterait à refaire</strong> : un rendu d'avatar raté découvert après le montage, c'est le montage refait en plus du rendu.</p>
       <div class="pas">
         <div class="r"><span class="ref">V5a</span><span class="qui c">Claude</span><p class="quoi">Assemble <strong>un seul envoi</strong> : six secondes de chaque rendu d'avatar avec son numéro d'ad en surimpression, les plans d'animation sur une planche, l'effet d'ouverture des preuves clients.</p></div>
         <div class="r"><span class="ref">V5b</span><span class="qui a">Adrien</span><p class="quoi">Regarde. Ce qu'il cherche : est-ce que ça fait faux. Un sourire tenu trop longtemps, une ressemblance approximative, un rendu trop lisse.</p></div>
@@ -468,6 +485,13 @@ python3 04-PRODUCTION/scripts/verifier_voix.py 04-PRODUCTION/medias/ADS-133/band
         <div class="r"><span class="ref">6c</span><span class="qui c">Claude</span><p class="quoi">Regarde la planche lui-même avant de l'envoyer, et corrige ce qui saute aux yeux.</p></div>
         <div class="r"><span class="ref">6d</span><span class="qui a">Adrien</span><p class="quoi">Vérifie les colonnes <strong>1:1 et 16:9</strong>. Un crâne coupé, un sujet décentré, un recadrage qui a mangé l'essentiel du plan. Le 9:16 est le format natif : il est toujours bon, et c'est exactement pour ça qu'il ne dit rien des deux autres.</p></div>
       </div>
+      <div class="note"><span class="etiq">Cadrages qui ratent, déjà vus</span>
+        <ul class="questions">
+          <li><strong>Le carré trop serré sur le visage</strong> d'un UGC. Le 1:1 garde toute la largeur du plan vertical et coupe le haut et le bas : le personnage y paraît beaucoup plus proche qu'en 9:16. Il se desserre en élargissant la source au noir.</li>
+          <li><strong>Le 16:9 recadré au centre</strong> sur un plan filmé au smartphone : il coupe le menton et pose le sous-titre en travers du visage. Le cadre vertical se garde sur du noir franc.</li>
+          <li><strong>Un crâne coupé</strong> ou un sujet décentré en 1:1, invisible sur le 9:16.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -478,7 +502,13 @@ python3 04-PRODUCTION/scripts/verifier_voix.py 04-PRODUCTION/medias/ADS-133/band
       <p>Avant de lancer quoi que ce soit de long, se demander <strong>ce qui restera à valider après</strong>. Si la réponse n'est pas « rien », c'est qu'on s'y prend dans le mauvais ordre.</p>
       <div class="pas">
         <div class="r"><span class="ref">V6a</span><span class="qui c">Claude</span><p class="quoi">Groupe <strong>tout</strong> ce qui demande son œil dans un seul envoi : la planche des plans, les extraits, les cartes de fin, les propositions restées en attente.</p></div>
-        <div class="r"><span class="ref">V6b</span><span class="qui a">Adrien</span><p class="quoi">Tranche en une fois.</p></div>
+        <div class="r"><span class="ref">V6b</span><span class="qui a">Adrien</span><p class="quoi"><strong>Tranche en une fois, et dit quoi :</strong></p>
+          <ul class="questions">
+            <li>les <strong>cadrages</strong> de la planche — ce qui passe, ce qui est à refaire, ads par ads ;</li>
+            <li>les <strong>mouvements d'appareil</strong> attendus au montage : zooms lents, coupes vers un cadrage plus serré, alternance de valeurs pour habiller les coupes ;</li>
+            <li>ce qui reste en attente des propositions précédentes.</li>
+          </ul>
+        </div>
         <div class="r"><span class="ref">V6c</span><span class="qui c">Claude</span><p class="quoi">Part travailler vingt ou trente minutes <strong>sans le déranger</strong>. Chaque phase de calcul immobilise sa machine, et chaque question le rappelle au clavier : alterner les deux additionne les nuisances au lieu de les compenser.</p></div>
         <div class="r"><span class="ref">V6d</span><span class="qui c">Claude</span><p class="quoi">Après une correction, <strong>un extrait de quelques secondes avant le complet</strong>. Ne jamais relancer un montage entier sur la foi d'une correction non vue.<span class="cmd">python3 04-PRODUCTION/scripts/monter_ads_NNN.py "9:16" --extrait 15</span></p></div>
       </div>

@@ -30,7 +30,7 @@ PUBLIABLES = {
     '00-SOCLE/formats.md':                                '03-les-fiches/20-formats-de-crea.md',
     '00-SOCLE/typologie-hooks.md':                        '03-les-fiches/25-typologie-des-hooks.md',
     '00-SOCLE/production/faire-sonner-une-voix-vraie.md': '03-les-fiches/30-faire-sonner-une-voix.md',
-    '00-SOCLE/production/castings-valides.md':            '03-les-fiches/35-castings-valides.md',
+    '00-SOCLE/production/castings-valides.md':            '03-les-fiches/35-rex-casting-valide.md',
     '00-SOCLE/production/choisir-un-visage.md':           '03-les-fiches/40-choisir-un-visage.md',
     '00-SOCLE/production/format-micro-trottoir.md':       '03-les-fiches/45-micro-trottoir.md',
     '00-SOCLE/production/tournage-d-adrien.md':           '03-les-fiches/50-tournage-d-adrien.md',

@@ -84,6 +84,56 @@ l'étape 0d et le titre de la fiche portent le même nom.
 
 ---
 
+## Deuxième principe, qui nuance le premier
+
+**Court ne veut pas dire vague.** Ce qui saute, c'est la théorie et la
+pédagogie. Sur l'opérationnel, il en veut **plus** de détail, pas moins :
+*« tout ce qui est process et production, il faut que tu sois précis sur les
+détails — même quelqu'un qui n'a jamais bossé avec moi doit pouvoir utiliser ce
+document. »*
+
+Cas concret : la phrase « la légende est relue dans le classeur à chaque appel,
+jamais recopiée dans le code » ne lui dit rien. Il faut expliquer **ce qu'est la
+légende, où elle se trouve et comment on s'en sert**.
+
+---
+
+## Page « La chaîne de production » — étape 1, le brief
+
+| # | Ce qu'il demande |
+|---|---|
+| en tête | Ajouter le principe d'ordonnancement : **on fait d'abord toute la rédaction des scripts, ensuite seulement la production.** |
+| **1a** | Ce n'est pas « quelles publicités lancer », c'est **quelles publicités rédiger**. Formulation : « Adrien dit à Claude quelles publicités du tableau Suivi Crea rédiger. » Avec un exemple : *« on rédige toutes les ads du 10 mars au 10 avril, c'est-à-dire les Ads X à Y »*. |
+| **1a** | Supprimer « ou remplit lui-même les lignes du Suivi Crea » : à ce stade les lignes sont déjà remplies, c'est la sortie de l'étape 0. |
+| **1a** | Ajouter : **Adrien dit aussi à quelle VSL correspond chaque lot d'ads.** |
+| **1b** | **Fusionner 1b, 1c, 1c′, 1d et 1e en une seule étape.** Claude lit la ligne et relève d'un coup : format, angle, hook, avatar, la VSL (recoupée avec ce qu'Adrien a dit en 1a), le statut porté par la couleur, et la technologie de production. |
+| statut | Détailler au lieu de résumer : dire ce qu'est la légende, où elle est (colonne A de l'onglet), et comment la couleur se lit. |
+| **1f** | Garder — c'est la bonne étape. C'est là que Claude demande **toutes les informations manquantes** : VSL, avatars, technologie non écrite, rushes ou voix fournis, casting validé à rejouer, registre. |
+| à faire plus tard | **Ajouter une colonne « Technologie » au tableau Suivi Crea.** Il veut s'en occuper une fois le site à jour. |
+
+---
+
+## Fiche « Le passage de relais » — elle disparaît
+
+Sa conclusion : *« cette fiche-là, il n'y a même pas besoin de fiche. Il faut
+juste lister l'ensemble des questions, et ça tu peux le mettre directement sur
+la chaîne de production. »*
+
+**La fiche sort du site** (déplacée dans `_ancien/`, rien n'est supprimé) et
+**la liste des questions remonte dans l'étape 1f de la chaîne.**
+
+Ce qui est écarté au passage, et pourquoi :
+- « Un brief incomplet ne produit pas une erreur : il produit vingt scripts qu'il
+  faut refaire » — de la formation ;
+- « rien, dans une ligne du tableau, ne dit à quelle page de vente une publicité
+  renvoie » — **c'est faux**, l'information est donnée par Adrien en 1a ;
+- « Demander "quel hook voulez-vous" renverrait à Adrien un travail qu'il a
+  délégué » et « on demande ce qui est un fait, on propose ce qui est un
+  jugement » — *« c'est de la philosophie, je n'en ai rien à foutre »* ;
+- la section sur les VSL brutes — juste sur le fond, mais déjà dite ailleurs.
+
+---
+
 ## Une question à lui poser avant d'appliquer
 
 **Le nom exact de la fiche.** Il a dit successivement « routine mensuelle de

@@ -151,3 +151,93 @@ même nom — lui faire trancher en un mot plutôt que de choisir à sa place.
   formats, source du rush.
 - **La planche des plans fait partie du lot de contrôle**, systématiquement et
   dans les trois formats, pas seulement quand une publicité a plusieurs plans.
+
+---
+
+# Deuxième passe — 13 septembre, après-midi
+
+**Nom de la fiche, tranché : « Ads : conception mensuelle ».**
+
+## Fiche « Ads : conception mensuelle »
+
+- § 3 — « on prend **dans l'idéal** le hook qui a le mieux marché pour cet angle-là ».
+  Ce n'est pas une règle figée.
+- § 6 — ajouter **Technologie** à la liste des colonnes à renseigner. Adrien
+  l'ajoutera lui-même au classeur.
+- **§ 4 — ajouter la conception des nouveaux concepts.** C'est ici que ça se passe,
+  pas à l'étape script : Adrien explique ce qu'il cherche (tel format, telle
+  direction), **Claude lui en propose un grand nombre**, Adrien choisit. Reprendre
+  la façon dont on a procédé sur les dernières rédactions.
+- **Tout en bas de chaque fiche** : un lien « Revenir à la chaîne de production »,
+  visible sans avoir à déplier la dernière section.
+
+## Chaîne — étape 1, le brief
+
+- Encadré d'ordre : « toute la rédaction des scripts **du mois**, puis seulement
+  ensuite la production ». **Supprimer** la phrase sur les étapes 1 à 4.
+- **1b** — ajouter **technologie** dans la liste relevée, juste après avatar, et
+  retirer la mention séparée qui suit. Ajouter que Claude **s'assure de savoir de
+  quelle VSL il s'agit**.
+- **1c** — supprimer « car il n'est écrit nulle part ». Le reste convient.
+- **1d** — « quelle VSL pour ce **lot d'ads** ». Préciser que **Claude ne demande que
+  ce qu'il n'a pas** : si l'avatar, la VSL ou la technologie sont déjà renseignés,
+  il ne pose pas la question.
+- **1d, la question casting** — ce n'est pas le visage précis : ce sont les
+  **indications de casting**. L'âge du personnage, le cadre (salle de sport, salon,
+  jardin), la direction artistique, le recours à l'animation.
+- **1d, registre** — ne pas dire « le lot ». Formuler : *si la ou les ads doivent
+  toucher une audience Problem Aware ou Solution Aware*, ce qui autorise notamment
+  à nommer NarratiFluent.
+- **Supprimer la panne connue de l'étape 1** : la colonne Technologie va être
+  ajoutée au classeur, la panne n'a plus lieu d'être.
+
+## Chaîne — étape 2, le script
+
+- **2b** — faux : Claude ne propose ni l'angle ni le hook, tout est décidé à
+  l'étape de conception.
+- **2d** — lier la fiche **« Copy Ads Checklist »** (renommer la fiche existante) et
+  la publier telle qu'elle est réellement appliquée. Adrien veut la lire.
+- **2e** — nommer les documents exactement, entre guillemets : le classeur
+  s'appelle **« Suivi Crea Meta ADS NarratiFluent »**. Vrai partout sur le site.
+- **Réordonner** : déposer au Drive est trop tôt. L'ordre voulu est
+  **(1)** Claude écrit les scripts directement dans la conversation,
+  **(2)** Adrien relit, corrige, écarte, réoriente — au micro ou à l'écrit,
+  **(3)** une fois validés seulement, Claude dépose au Drive et passe la ligne en
+  bleu dans le classeur.
+- **2g** — « consigne chaque recadrage avec sa date et son numéro d'ad, tous les
+  deux ou trois batches les remarques récurrentes sont promues en règle
+  permanente » : **il n'a pas compris cette étape**, à réécrire clairement.
+- **Nouvelle fiche à créer : la mise en forme des documents Google Docs.**
+  Nomenclature, police, et surtout : **les indications de production sont
+  surlignées en jaune, texte en noir**. À lier depuis l'étape où Claude crée le
+  document.
+- La panne connue de l'étape 2 (script validé intangible) lui convient.
+
+## Chaîne — étape 3, découpage et casting
+
+**Le casting, ce sont quatre choses : les visages, les voix, la direction
+artistique et les musiques.** La section est confuse et doit être refaite.
+
+- **Visages** — Claude propose **cinq à dix candidats par personnage** : une partie
+  parmi ceux déjà utilisés et déjà présents sur Argil, une partie de nouveaux pris
+  sur Pexels, Pixabay ou ailleurs.
+- **Voix** — **cinq candidats par personnage**, pris dans le stock ou clonés pour
+  l'occasion selon le contexte.
+- **Direction artistique** — sur les formats animés ou techniques, proposer une
+  **planche d'images**, comme cela a été fait sur l'Ads 133.
+- **Musiques** — elles font partie du casting. Parfois aucune, parfois une. Claude
+  propose des exemples, ou demande quel registre pour ce lot ; Adrien oriente
+  (documentaire pour Kató Lomb, motivation, etc.).
+- Claude **pose ses questions** à cette étape.
+
+## Chaîne — étape 4, la bande son
+
+- **Ne jamais oublier de monter la voix ET la musique ensemble**, plus les bruits
+  demandés. Le bruit de bobine réclamé sur l'Ads 130 n'avait pas été posé.
+- Validation de la maquette : supprimer la comparaison « quelques milliers de
+  caractères contre une centaine de crédits d'avatar » — trop théorique, et on ne
+  parle pas encore d'avatar à ce stade. Garder « le point de contrôle le moins cher
+  de toute la chaîne ».
+- **Renuméroter** les sous-étapes de validation en **4a, 4b, 4c**.
+- Préciser partout que **tout se fait par lot** : on rédige tout d'un coup, on
+  produit tout d'un coup.

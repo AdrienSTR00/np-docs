@@ -29,15 +29,21 @@ fois — changer une couleur dans le classeur ne demande de modifier aucun scrip
 | **blanc** | en ligne |
 | **rouge** | coupée |
 
-## Ce que la colonne Format porte vraiment
+## La colonne Technologie
 
-Le format n'est pas qu'un genre : il porte aussi **la technologie de production**,
-entre parenthèses à la fin — `UGC AI femme 50 ans (Argil)`, `Static (Canva)`,
-`Interview podcast (tournage réel)`.
+**Le format dit le genre, la Technologie dit avec quoi l'image se fabrique.** C'est elle
+qui décide de la branche à l'étape 5 du process, et elle se remplit pour chaque créa.
 
-Écrire « tournage réel » plutôt que de laisser vide. **L'absence d'information ne doit
-jamais signifier quelque chose** : un blanc veut dire « personne n'a rempli », pas
-« c'est du tournage ».
+| Valeur | Ce que ça veut dire |
+|---|---|
+| `Argil` | un avatar généré qui parle sur notre bande son |
+| `Tournage réel (Céline)` · `Tournage réel (Adrien, smartphone)` | quelqu'un se filme ; ni rendu ni casting de voix |
+| `Banques d'images (Pexels, Pixabay)` | uniquement des plans de banque sous une voix off |
+| `Archives (archive.org) + banques d'images` | films d'époque, traitement vieille bobine |
+| `Google AI Studio (Veo)` | plans générés un par un, style tenu par une description commune |
+
+**Elle ne se laisse jamais vide.** L'absence d'information ne doit jamais signifier
+quelque chose : un blanc veut dire « personne n'a rempli », pas « c'est du tournage ».
 
 ## Qui écrit quoi
 

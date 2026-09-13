@@ -1,4 +1,4 @@
-# Le tableau Suivi Crea, l'interface entre Adrien et Claude
+# Le tableau Suivi Crea
 
 > Tout passe par ce classeur. Adrien y écrit ce qu'il veut, Claude y lit ce qu'il doit
 > faire et y écrit ce qu'il a fait. Il n'y a pas d'autre canal de commande.

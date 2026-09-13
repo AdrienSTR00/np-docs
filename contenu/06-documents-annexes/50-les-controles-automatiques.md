@@ -46,7 +46,7 @@ la phrase — un défaut qu'aucune durée ne signale.
 **`check_avatar.py`** mesure l'ancrage avatar réel dans le texte, au lieu de le
 supposer. **`check_hook.py`** contrôle le hook contre sa typologie.
 
-La [Copy Checklist](../les-regles/copy-checklist.html) s'applique **automatiquement
+La [Copy Ads Checklist](../les-regles/copy-ads-checklist.html) s'applique **automatiquement
 après la rédaction et avant la relecture d'Adrien**, sur un contexte neuf pour ne pas
 être juge et partie. Un échec sur un critère éliminatoire déclenche une réécriture sans
 qu'Adrien ait à la demander.

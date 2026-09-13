@@ -62,11 +62,30 @@ body{
   display:block; font-family:var(--mono); font-size:10px; letter-spacing:.13em;
   text-transform:uppercase; color:var(--encre-3); margin-top:3px;
 }
-.groupe{margin-bottom:24px}
+.groupe{margin-bottom:6px}
 .groupe-nom{
   display:block; font-family:var(--mono); font-size:10px; letter-spacing:.13em;
-  text-transform:uppercase; color:var(--encre-3); margin-bottom:9px;
+  text-transform:uppercase; color:var(--encre-3); padding:7px 10px 7px 22px;
+  cursor:pointer; list-style:none; position:relative; border-radius:2px;
 }
+.groupe-nom::-webkit-details-marker{display:none}
+.groupe-nom:hover{color:var(--encre);background:var(--papier-2)}
+/* le chevron dit si le volet est ouvert, et il est seul à le dire */
+.groupe-nom::before{
+  content:""; position:absolute; left:8px; top:11px; width:5px; height:5px;
+  border-right:1.5px solid var(--encre-3); border-bottom:1.5px solid var(--encre-3);
+  transform:rotate(-45deg); transition:transform .15s ease;
+}
+.groupe[open] > .groupe-nom::before{transform:rotate(45deg)}
+.groupe > ul{margin:2px 0 10px}
+/* L'entrée principale : un lien direct, au même rang qu'un groupe. */
+.entree{
+  display:block; text-decoration:none; font-family:var(--grot); font-weight:600;
+  font-size:14.5px; color:var(--encre); padding:8px 10px; border-radius:2px;
+  margin-bottom:6px; border-left:2px solid transparent; line-height:1.3;
+}
+.entree:hover{background:var(--papier-2)}
+.entree.actif{border-left-color:var(--orange);background:var(--papier-2)}
 .rail ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
 .rail a{
   display:block; text-decoration:none; color:var(--encre-2); font-family:var(--grot);

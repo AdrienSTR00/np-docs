@@ -30,6 +30,13 @@ MODELE = RACINE / 'modele'
 
 TITRE_SITE = 'Process NarratiFluent'
 
+# Le nom d'un dossier ne porte ni accent ni apostrophe : l'étiquette affichée se
+# déclare ici quand la transformation mécanique ne suffit pas.
+ETIQUETTES = {
+    '05-les-regles': 'Les règles',
+    '01-process': "Process création d'ads",
+}
+
 # **Le site se rafraîchit tout seul, et il le faut.** GitHub Pages envoie
 # `cache-control: max-age=600` et ne laisse pas changer cet en-tête : le
 # navigateur garde donc chaque page dix minutes, et un rechargement normal
@@ -207,9 +214,13 @@ def _base(page):
 
 
 def _sommaire(pages, base, courante=None):
-    """Le sommaire, groupé par section, dans l'ordre des noms de fichiers."""
-    # La page d'accueil n'est pas listée : le titre en haut du rail y mène déjà,
-    # et la voir deux fois ferait douter qu'il s'agit de la même.
+    """Le sommaire : les entrées principales visibles, les listes repliées.
+
+    **Adrien ne veut pas cinquante fiches sous les yeux en permanence.** Une
+    section d'une seule page — le process lui-même — s'affiche comme un lien
+    direct ; une section qui en contient plusieurs devient un volet replié, qui
+    ne s'ouvre que si on le demande ou si la page courante s'y trouve.
+    """
     sections, ordre = {}, []
     for p in pages[1:]:
         s = p['section'] or 'Général'
@@ -219,14 +230,24 @@ def _sommaire(pages, base, courante=None):
         sections[s].append(p)
     out = []
     for s in ordre:
-        racine = (s == 'Général')
-        nom = html.escape(re.sub(r'^\d+[-_]', '', s).replace('-', ' ').capitalize())
-        out.append('<div class="groupe groupe-racine"><ul>' if racine else
-                   f'<div class="groupe"><span class="groupe-nom">{nom}</span><ul>')
-        for p in sections[s]:
+        pages_s = sections[s]
+        nom = html.escape(ETIQUETTES.get(s) or
+                          re.sub(r'^\d+[-_]', '', s).replace('-', ' ').capitalize())
+        ici = courante and any(p['lien'] == courante for p in pages_s)
+        # une seule page : elle EST la section, et son titre sert d'étiquette
+        if len(pages_s) == 1:
+            p0 = pages_s[0]
+            actif = ' class="actif"' if courante == p0['lien'] else ''
+            out.append(f'<a class="entree" href="{base}{p0["lien"]}"{actif}>'
+                       f'{html.escape(p0["titre"])}</a>')
+            continue
+        out.append(f'<details class="groupe"{" open" if ici else ""}>'
+                   f'<summary class="groupe-nom">{nom}</summary><ul>')
+        for p in pages_s:
             actif = ' class="actif"' if courante and p['lien'] == courante else ''
-            out.append(f'<li><a href="{base}{p["lien"]}"{actif}>{html.escape(p["titre"])}</a></li>')
-        out.append('</ul></div>')
+            out.append(f'<li><a href="{base}{p["lien"]}"{actif}>'
+                       f'{html.escape(p["titre"])}</a></li>')
+        out.append('</ul></details>')
     return '\n'.join(out)
 
 

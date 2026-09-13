@@ -105,4 +105,4 @@ Pour chaque nouvelle créa :
   point de vigilance.
 - **Colorer en jaune** les créas conçues.
 
-À partir de là, on passe à l'étape suivante de la [chaîne de production](../la-chaine/la-chaine-de-production.html).
+À partir de là, on passe à l'étape suivante de la [process création d'ads](../process/process-creation-d-ads.html).

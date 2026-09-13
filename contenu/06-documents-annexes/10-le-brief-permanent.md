@@ -92,7 +92,7 @@ publicité, et il est le seul à pouvoir le modifier.
 Chaque recadrage est consigné avec sa date et son numéro d'ad. Tous les deux ou trois
 lots, les remarques qui se répètent sont proposées à la promotion en règle permanente,
 dans les [anti-patterns](../les-regles/anti-patterns.html) ou dans la
-[Copy Checklist](../les-regles/copy-checklist.html). **C'est le mécanisme par lequel la
+[Copy Ads Checklist](../les-regles/copy-ads-checklist.html). **C'est le mécanisme par lequel la
 qualité monte lot après lot.**
 
 ## Ce que Claude ne fait jamais

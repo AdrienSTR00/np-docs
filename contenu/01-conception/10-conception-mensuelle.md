@@ -1,4 +1,4 @@
-# Conception mensuelle
+# Ads : conception mensuelle
 
 > Le mois prochain se décide à partir du mois qui vient de finir.
 
@@ -37,8 +37,8 @@ reste est conservé tel quel.
 
 Deux conditions, à chaque fois :
 
-- **Quand on change l'angle**, on ne prend pas un angle au hasard : on prend le hook
-  qui a le mieux marché pour cet angle-là.
+- **Quand on change l'angle**, on ne prend pas un angle au hasard : on prend **dans l'idéal**
+  le hook qui a le mieux marché pour cet angle-là.
 
     *La winneuse tourne en podcast sur l'angle expatriation. On garde le podcast et
     l'Avatar 3, on passe à l'angle promotion pro — et on reprend le hook qui a le
@@ -59,6 +59,21 @@ On peut créer de nouveaux hooks, de nouveaux formats ou de nouveaux avatars, ou
 piocher dans ceux qui ont déjà été générés sans jamais servir. On essaie de faire ça
 sur **10 à 30 % des créas du mois**. Le reste itère sur du prouvé.
 
+### Comment se conçoit une nouveauté
+
+C'est ici que ça se passe, et nulle part ailleurs : au moment où on écrit les scripts,
+l'angle et le hook sont déjà arrêtés.
+
+1. **Adrien dit ce qu'il cherche** — un format qu'il veut tester, une direction, une
+   audience qu'il trouve mal servie, une publicité repérée ailleurs. Il n'a pas
+   besoin d'arriver avec une idée finie.
+2. **Claude en propose un grand nombre**, pas deux ou trois : des formats, des
+   angles, des hooks, des avatars, avec pour chacun ce qu'il vise et sur quel avatar
+   il tient.
+3. **Adrien choisit et écarte.** Ce qu'il écarte n'est pas jeté : ça rejoint la
+   réserve et peut être reproposé un autre mois.
+4. Les retenus rejoignent les lignes du tableau, au même titre que les itérations.
+
 ## 5. Combien de créas ce mois-ci
 
 Le volume suit la dépense quotidienne sur un funnel.
@@ -74,7 +89,8 @@ Le volume suit la dépense quotidienne sur un funnel.
 Pour chaque nouvelle créa :
 
 - **Numéroter** à la suite de la dernière ads existante.
-- Renseigner **« Itération de »**, **« Format »**, **« Angle (Hook) »**, **« Avatar »**.
+- Renseigner **« Itération de »**, **« Format »**, **« Angle (Hook) »**, **« Avatar »**
+  et **« Technologie »**.
 - Poser la **date de lancement prévue**, répartie sur les quatre semaines couvertes.
   En général, on conçoit les ads du mois qui arrive **entre le 1er et le 5 de chaque
   mois**. Concrètement, entre le 1er et le 5 mars, on conçoit les ads **du 10 mars au

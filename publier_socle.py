@@ -44,7 +44,7 @@ PUBLIABLES = {
     '00-SOCLE/production/avant-de-livrer.md':             '03-les-fiches/90-avant-de-livrer.md',
     '00-SOCLE/production/boucle-de-validation.md':        '04-les-regles/10-boucle-de-validation.md',
     '00-SOCLE/anti-patterns.md':                          '04-les-regles/20-anti-patterns.md',
-    '00-SOCLE/copy-checklist.md':                         '04-les-regles/30-copy-checklist.md',
+    '00-SOCLE/copy-checklist.md':                         '04-les-regles/30-copy-ads-checklist.md',
     '00-SOCLE/compliance-meta.md':                        '04-les-regles/40-compliance-meta.md',
     '.claude/skills/rediger-ads/SKILL.md':                '05-ce-que-claude-lit/20-skill-rediger.md',
     '.claude/skills/produire-ads/SKILL.md':               '05-ce-que-claude-lit/30-skill-produire.md',

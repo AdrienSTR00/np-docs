@@ -202,3 +202,12 @@ footer p{color:inherit;margin:0;max-width:none}
 }
 .carte-chapo{font-size:13.5px;line-height:1.5;color:var(--encre-3)}
 .carte-chapo:empty{display:none}
+
+/* Le retour à la chaîne, en pied de chaque fiche : Adrien veut y revenir sans
+   avoir à replier la dernière section ni à passer par le sommaire. */
+.retour-chaine{margin:46px 0 0}
+.retour-chaine a{
+  font-family:var(--grot); font-size:14px; font-weight:500; text-decoration:none;
+  color:var(--encre-2); border-bottom:1px solid var(--trait); padding-bottom:2px;
+}
+.retour-chaine a:hover{color:var(--petrole);border-bottom-color:var(--petrole)}

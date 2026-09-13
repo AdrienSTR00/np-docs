@@ -47,6 +47,19 @@ ETIQUETTES = {
 # au chargement, sans cache. Si l'empreinte a changé, elle se recharge une fois.
 VERSION = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
 
+# **Le lien de retour ne figure pas sur toutes les pages.** Il n'a de sens que
+# sur une page à laquelle le process renvoie : ni l'accueil ni le process
+# lui-même n'ont à proposer d'y revenir.
+RETOUR = ('<p class="retour-chaine"><a href="{base}process/process-creation-d-ads.html">'
+          "← Revenir au process création d'ads</a></p>")
+
+
+def _retour(page, base, accueil):
+    if page is accueil or page['lien'].startswith('process/'):
+        return ''
+    return RETOUR.format(base=base)
+
+
 RAFRAICHIR = """<script>
 (function(){
   var ici = "__VERSION__";
@@ -301,6 +314,7 @@ def construire():
                          .replace('{{TITRE_SITE}}', TITRE_SITE)
                          .replace('{{CHAPO}}', html.escape(p['chapo']))
                          .replace('{{SOMMAIRE}}', _sommaire(pages, base, p['lien']))
+                         .replace('{{RETOUR}}', _retour(p, base, pages[0]))
                          .replace('{{CORPS}}', corps),
                          encoding='utf-8')
         print(f'  {p["lien"]:44} {p["titre"]}')
@@ -331,6 +345,7 @@ def construire():
         .replace('{{TITRE_SITE}}', TITRE_SITE)
         .replace('{{CHAPO}}', html.escape(a['chapo']))
         .replace('{{SOMMAIRE}}', _sommaire(pages, './', a['lien']))
+        .replace('{{RETOUR}}', '')
         .replace('{{CORPS}}', accueil), encoding='utf-8')
 
     _fichiers_annexes()

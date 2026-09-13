@@ -63,18 +63,29 @@ def _retour(page, base, accueil):
 RAFRAICHIR = """<script>
 (function(){
   var ici = "__VERSION__";
-  if (sessionStorage.getItem('np-recharge') === ici) return;
-  fetch("__BASE__version.txt", {cache: 'no-store'})
-    .then(function(r){ return r.ok ? r.text() : null; })
-    .then(function(v){
-      if (!v) return;
-      v = v.trim();
-      if (v && v !== ici) {
-        sessionStorage.setItem('np-recharge', v);
-        location.replace(location.pathname + '?v=' + v + location.hash);
-      }
-    })
-    .catch(function(){});
+  // **On revérifie quand l'onglet revient au premier plan.** La vérification au
+  // seul chargement ne couvrait pas le cas le plus fréquent : un onglet laissé
+  // ouvert pendant qu'on republie. Adrien regardait une page vieille d'une heure
+  // en croyant que la correction n'avait pas été faite.
+  function verifier(){
+    if (sessionStorage.getItem('np-recharge') === ici) return;
+    fetch("__BASE__version.txt", {cache: 'no-store'})
+      .then(function(r){ return r.ok ? r.text() : null; })
+      .then(function(v){
+        if (!v) return;
+        v = v.trim();
+        if (v && v !== ici) {
+          sessionStorage.setItem('np-recharge', v);
+          location.replace(location.pathname + '?v=' + v + location.hash);
+        }
+      })
+      .catch(function(){});
+  }
+  verifier();
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) verifier();
+  });
+  window.addEventListener('focus', verifier);
 })();
 </script>"""
 

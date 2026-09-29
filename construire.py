@@ -35,6 +35,7 @@ TITRE_SITE = 'Process NarratiFluent'
 ETIQUETTES = {
     '05-les-regles': 'Les règles',
     '01-process': "Process création d'ads",
+    '02-textes-de-vente': "Process textes de vente",
 }
 
 # **Le site se rafraîchit tout seul, et il le faut.** GitHub Pages envoie
@@ -53,10 +54,19 @@ VERSION = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
 RETOUR = ('<p class="retour-chaine"><a href="{base}process/process-creation-d-ads.html">'
           "← Revenir au process création d'ads</a></p>")
 
+# **Chaque domaine renvoie vers sa propre chaîne.** Les fiches et les règles
+# appartiennent au process des publicités ; les pages de la rédaction des textes
+# de vente renvoient, elles, à la chaîne de leur section.
+RETOUR_TEXTES = ('<p class="retour-chaine"><a href="{base}textes-de-vente/la-chaine.html">'
+                 "← Revenir au process rédaction d'un texte de vente</a></p>")
+CHAINE_TEXTES = 'textes-de-vente/la-chaine.html'
+
 
 def _retour(page, base, accueil):
     if page is accueil or page['lien'].startswith('process/'):
         return ''
+    if page['section'] == '02-textes-de-vente':
+        return '' if page['lien'] == CHAINE_TEXTES else RETOUR_TEXTES.format(base=base)
     return RETOUR.format(base=base)
 
 

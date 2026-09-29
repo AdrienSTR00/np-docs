@@ -3,7 +3,13 @@
 > Voici l'ensemble des process et SOP pour les opérations du business NarratiFluent.
 > À jour en permanence, et corrigeable en le disant à Claude.
 
+## Les publicités
+
 {{CARTES:01-process}}
+
+## Les textes de vente et le funnel
+
+{{CARTES:02-textes-de-vente}}
 
 ## Comment on corrige une page
 

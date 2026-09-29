@@ -1,4 +1,4 @@
-# Process rédaction d'un texte de vente
+# Process création VSL / funnel
 
 > De la préparation à la livraison du Google Doc : les étapes d'un texte de vente NarratiFluent,
 > ce que chacune produit, et à quels moments Adrien tranche.
@@ -52,19 +52,10 @@ illisible.
 Deux validations s'ajoutent plus tard : **le texte**, en un ou plusieurs tours de review, et **le
 texte final** après fignolage, avant dépôt dans le Google Doc.
 
-## La mise en page, valable pour tout ce qui sort d'ici
+## Les règles permanentes
 
-**Une ligne vide entre deux paragraphes.** Documents de préparation, textes de vente, scripts
-d'upsell : tout ce qu'Adrien lit. Un texte à l'interligne serré lui est illisible et il le renvoie
-avant d'en avoir jugé le contenu.
-
-**Aucune ligne vide entre deux puces qui se suivent**, sous-puces comprises. La ligne vide reste
-entre un paragraphe et la liste qui le suit.
-
-**Un saut de page avant chaque étape**, sauf la première.
-
-Dans un texte destiné à des slides, on va à la ligne toutes les une à deux phrases : chaque bloc
-devient une slide, et le texte est donc très aéré.
+La mise en page de tout ce qui sort de cette chaîne, les quatre arrêts de validation dans le détail
+et ce qui est gelé une fois validé sont dans **Les règles** de cette section.
 
 ## Le livrable
 

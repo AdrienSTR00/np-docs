@@ -7,9 +7,9 @@
 
 {{CARTES:01-process}}
 
-## Les textes de vente et le funnel
+## Les VSL et le funnel
 
-{{CARTES:02-textes-de-vente}}
+{{CARTES:07-process-vsl-funnel}}
 
 ## Comment on corrige une page
 

@@ -35,8 +35,22 @@ TITRE_SITE = 'Process NarratiFluent'
 ETIQUETTES = {
     '05-les-regles': 'Les règles',
     '01-process': "Process création d'ads",
-    '02-textes-de-vente': "Process textes de vente",
+    '07-process-vsl-funnel': "Process création VSL / funnel",
+    '08-vsl-les-fiches': 'Les fiches',
+    '09-vsl-les-regles': 'Les règles',
+    '10-vsl-documents-annexes': 'Documents annexes',
 }
+
+# **Deux domaines, au même rang.** La création des publicités et la création des
+# VSL et du funnel sont deux process distincts : chacun a sa chaîne, ses fiches,
+# ses règles et ses documents annexes, et le sommaire les présente comme deux
+# blocs séparés. Mélanger les deux — une chaîne rangée sous l'autre — a été la
+# première erreur de mise en place.
+DOMAINES = [
+    ('01-process', ['03-les-fiches', '05-les-regles', '06-documents-annexes']),
+    ('07-process-vsl-funnel', ['08-vsl-les-fiches', '09-vsl-les-regles',
+                               '10-vsl-documents-annexes']),
+]
 
 # **Le site se rafraîchit tout seul, et il le faut.** GitHub Pages envoie
 # `cache-control: max-age=600` et ne laisse pas changer cet en-tête : le
@@ -54,19 +68,21 @@ VERSION = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
 RETOUR = ('<p class="retour-chaine"><a href="{base}process/process-creation-d-ads.html">'
           "← Revenir au process création d'ads</a></p>")
 
-# **Chaque domaine renvoie vers sa propre chaîne.** Les fiches et les règles
-# appartiennent au process des publicités ; les pages de la rédaction des textes
-# de vente renvoient, elles, à la chaîne de leur section.
-RETOUR_TEXTES = ('<p class="retour-chaine"><a href="{base}textes-de-vente/la-chaine.html">'
-                 "← Revenir au process rédaction d'un texte de vente</a></p>")
-CHAINE_TEXTES = 'textes-de-vente/la-chaine.html'
+# **Chaque domaine renvoie vers sa propre chaîne**, jamais vers celle de l'autre.
+RETOUR_VSL = ('<p class="retour-chaine">'
+              '<a href="{base}process-vsl-funnel/process-creation-vsl-funnel.html">'
+              "← Revenir au process création VSL / funnel</a></p>")
+SECTIONS_VSL = ('07-process-vsl-funnel', '08-vsl-les-fiches', '09-vsl-les-regles',
+                '10-vsl-documents-annexes')
 
 
 def _retour(page, base, accueil):
     if page is accueil or page['lien'].startswith('process/'):
         return ''
-    if page['section'] == '02-textes-de-vente':
-        return '' if page['lien'] == CHAINE_TEXTES else RETOUR_TEXTES.format(base=base)
+    if page['section'] in SECTIONS_VSL:
+        if page['section'] == '07-process-vsl-funnel':
+            return ''
+        return RETOUR_VSL.format(base=base)
     return RETOUR.format(base=base)
 
 
@@ -247,11 +263,39 @@ def _base(page):
     return '../' * (page['lien'].count('/')) or './'
 
 
+def _nom_section(s):
+    return html.escape(ETIQUETTES.get(s) or
+                       re.sub(r'^\d+[-_]', '', s).replace('-', ' ').capitalize())
+
+
+def _bloc_section(s, pages_s, base, courante, volet=False):
+    """Une section du sommaire : un lien direct si elle n'a qu'une page, un volet sinon.
+
+    `volet` force le volet : une section de second rang — les fiches, les règles,
+    les documents annexes d'un domaine — garde son étiquette même quand elle ne
+    contient qu'une page, pour que les deux domaines se lisent à l'identique.
+    """
+    if len(pages_s) == 1 and not volet:
+        p0 = pages_s[0]
+        actif = ' class="actif"' if courante == p0['lien'] else ''
+        return (f'<a class="entree" href="{base}{p0["lien"]}"{actif}>'
+                f'{html.escape(p0["titre"])}</a>')
+    ici = courante and any(p['lien'] == courante for p in pages_s)
+    out = [f'<details class="groupe"{" open" if ici else ""}>'
+           f'<summary class="groupe-nom">{_nom_section(s)}</summary><ul>']
+    for p in pages_s:
+        actif = ' class="actif"' if courante and p['lien'] == courante else ''
+        out.append(f'<li><a href="{base}{p["lien"]}"{actif}>'
+                   f'{html.escape(p["titre"])}</a></li>')
+    out.append('</ul></details>')
+    return ''.join(out)
+
+
 def _sommaire(pages, base, courante=None):
-    """Le sommaire : les entrées principales visibles, les listes repliées.
+    """Le sommaire : un bloc par domaine, sa chaîne puis ses sections repliées.
 
     **Adrien ne veut pas cinquante fiches sous les yeux en permanence.** Une
-    section d'une seule page — le process lui-même — s'affiche comme un lien
+    section d'une seule page — la chaîne elle-même — s'affiche comme un lien
     direct ; une section qui en contient plusieurs devient un volet replié, qui
     ne s'ouvre que si on le demande ou si la page courante s'y trouve.
     """
@@ -262,26 +306,19 @@ def _sommaire(pages, base, courante=None):
             sections[s] = []
             ordre.append(s)
         sections[s].append(p)
-    out = []
+    out, vus = [], set()
+    for chaine, sous in DOMAINES:
+        blocs = []
+        for s in [chaine] + sous:
+            if s in sections:
+                blocs.append(_bloc_section(s, sections[s], base, courante,
+                                           volet=(s != chaine)))
+                vus.add(s)
+        if blocs:
+            out.append('<div class="domaine">' + ''.join(blocs) + '</div>')
     for s in ordre:
-        pages_s = sections[s]
-        nom = html.escape(ETIQUETTES.get(s) or
-                          re.sub(r'^\d+[-_]', '', s).replace('-', ' ').capitalize())
-        ici = courante and any(p['lien'] == courante for p in pages_s)
-        # une seule page : elle EST la section, et son titre sert d'étiquette
-        if len(pages_s) == 1:
-            p0 = pages_s[0]
-            actif = ' class="actif"' if courante == p0['lien'] else ''
-            out.append(f'<a class="entree" href="{base}{p0["lien"]}"{actif}>'
-                       f'{html.escape(p0["titre"])}</a>')
-            continue
-        out.append(f'<details class="groupe"{" open" if ici else ""}>'
-                   f'<summary class="groupe-nom">{nom}</summary><ul>')
-        for p in pages_s:
-            actif = ' class="actif"' if courante and p['lien'] == courante else ''
-            out.append(f'<li><a href="{base}{p["lien"]}"{actif}>'
-                       f'{html.escape(p["titre"])}</a></li>')
-        out.append('</ul></details>')
+        if s not in vus:
+            out.append(_bloc_section(s, sections[s], base, courante))
     return '\n'.join(out)
 
 

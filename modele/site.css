@@ -66,6 +66,8 @@ body{
    serrent entre eux et prennent un alinéa. Il y aura d'autres process au-dessus
    d'eux — la place se garde maintenant. */
 .groupe{margin:0 0 1px 16px}
+/* Deux process distincts : chaque domaine forme un bloc, séparé du suivant. */
+.domaine + .domaine{margin-top:18px;padding-top:16px;border-top:1px solid var(--trait)}
 .groupe-nom{
   display:block; font-family:var(--mono); font-size:10px; letter-spacing:.13em;
   text-transform:uppercase; color:var(--encre-3); padding:4px 10px 4px 18px;

@@ -28,6 +28,12 @@ vide reste ensemble. Au-delà de 200 caractères, la coupe est **récursive** �
 caractères donne trois slides, pas deux moitiés encore trop longues. La première finit par « … », la
 suivante commence par « … » et reprend sans majuscule.
 
+**La coupe tombe sur une frontière de sens**, dans cet ordre : une fin de phrase, sinon une virgule,
+un point-virgule ou un deux-points, sinon le début d'une proposition introduite par une conjonction
+ou un relatif. Jamais sur une espace nue : deux mots qui vont ensemble — un adjectif et son nom, les
+deux morceaux d'une locution — restent sur la même slide. Quand aucune frontière ne convient, la
+slide reste longue : une slide chargée se lit, une expression coupée en deux ne se lit pas.
+
 **Ce qui ne devient jamais une slide** : les titres de sections, les notes de production, les
 indications de tournage, les didascalies des témoignages, les répliques en anglais des vidéos
 avant / après, les mentions « extrait vidéo » et l'appendice des sources.

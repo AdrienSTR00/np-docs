@@ -53,11 +53,37 @@ décale tous les index ; la clé est donc le début du texte.
 
 ## Les images
 
+**Une image montre ce que la slide dit, pas le thème du chapitre.** C'est la règle qui prime sur
+toutes les autres. Le plan d'illustration attribue un bassin d'images à une plage de slides : il
+fournit la matière, il ne fait pas le choix. Le choix se fait slide par slide, en relisant la
+phrase. Quand la phrase énumère (« les plans des pièces, les notices, les appels avec le client »),
+chaque image reprend un élément de l'énumération, dans l'ordre. Quand elle nomme un lieu, un objet
+ou un métier précis, c'est celui-là qu'on montre, pas sa famille. Le lien n'a pas besoin d'être
+littéral, mais il doit être évident en une seconde.
+
+**Pas de photo de stock générique.** Ce qui saute : le sujet posé au centre sur fond uni, la lumière
+de studio sans direction, les modèles qui sourient à l'objectif, le plan large où rien n'accroche
+l'œil. Ce qu'on garde : une lumière qui vient de quelque part, un cadrage serré ou un point de vue
+choisi, de la profondeur de champ, une scène qui a l'air prise et non fabriquée. En pratique, tirer
+une quinzaine de candidates par thème plutôt que trois, les regarder sur une planche de contrôle, et
+écarter sans regret tout ce qui ressemble à une illustration de brochure. Une requête qui décrit une
+situation ramène de meilleures images qu'une requête qui nomme un concept.
+
 **Le coin bas droit reste libre** : le porte-parole s'y incruste en vidéo pendant toute la
 présentation. Une illustration s'ancre donc à gauche, dans une zone de 7,2 × 3,8 pouces posée à
 0,35 du bord, et le texte monte en haut de la slide. Un mock-up, large et bas, prend 9 pouces de
 large et s'arrête à 1,55 du haut. Une capture se colle à l'étiquette ou à la question qui la
 précède, qui monte en haut en corps 24.
+
+**Les cinq gabarits de slide** sont relevés sur les slides mises en page par le porte-parole, et
+ils se lisent dans `06-VSL/scripts/gabarits.py` : texte seul ; une image centrée ; deux images côte
+à côte ; deux images sous une phrase longue (la rangée descend donc rétrécit) ; trois images en
+rangée. Dans tous les cas la dernière ligne de texte s'arrête au-dessus de la zone d'incrustation,
+et au-delà de quatre lignes le cadre de texte se remonte pour y parvenir.
+
+**Une énumération se met en puces.** Quand plusieurs slides consécutives égrènent une liste, chaque
+slide porte une puce Google Slides en tête de phrase, le paragraphe passe à gauche, le texte monte
+en haut en corps 29, et l'image se pose en dessous.
 
 **Les mock-ups se posent avant les illustrations** : un mock-up appartient à la slide qui annonce son
 bonus et ne peut aller ailleurs, une illustration si.
